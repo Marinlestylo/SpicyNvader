@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spicy_Nvader
 {
@@ -10,45 +6,48 @@ namespace Spicy_Nvader
     {
 
         static int positionMenu = 1;
+        static int tempos = 24;
+        static bool sound = true;
+        static bool difficulty = false;
+        static int currentLeft = 0;
+        static bool IsGameNotLaunched = true;
+        static int margeLeftMenu = 24;
+        static int margeTopMenu = 10;
+        static int margeLeftTitle = 10;
+        static int margeTopTitle = 1;
+        const int SPACE_MENU = 3;
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+            LaunchMenu();
+            Console.Read();
+        }
 
-            int margeLeftTitle = 10;
-            int margeTopTitle = 1;
-            const int SPACE_MENU = 3;
+        public static void LaunchMenu()
+        {
+            CreateMenu();
+            MenuMouvement(SPACE_MENU);
+        }
 
-
-            int margeLeftMenu = 24;
-            int margeTopMenu = 10;
-            
-            //Console.CursorVisible = false;
-
-
+        public static void CreateMenu()
+        {
             WriteTitle(margeLeftTitle, margeTopTitle);
-
-
 
             Console.SetCursorPosition(margeLeftMenu, margeTopMenu);
             Console.WriteLine("Start");
-            Console.SetCursorPosition(margeLeftMenu, margeTopMenu += SPACE_MENU);
+            Console.SetCursorPosition(margeLeftMenu, margeTopMenu + 1 * SPACE_MENU);
             Console.WriteLine("Options");
-            Console.SetCursorPosition(margeLeftMenu, margeTopMenu += SPACE_MENU);
+            Console.SetCursorPosition(margeLeftMenu, margeTopMenu + 2 * SPACE_MENU);
             Console.WriteLine("HighScores");
-            Console.SetCursorPosition(margeLeftMenu, margeTopMenu += SPACE_MENU);
+            Console.SetCursorPosition(margeLeftMenu, margeTopMenu + 3 * SPACE_MENU);
             Console.WriteLine("About");
-            Console.SetCursorPosition(margeLeftMenu, margeTopMenu += SPACE_MENU);
+            Console.SetCursorPosition(margeLeftMenu, margeTopMenu + 4 * SPACE_MENU);
             Console.WriteLine("Leave Game");
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(margeLeftMenu - 2, 10);
             WriteTriangle();
-
-            MenuMouvement(SPACE_MENU);
-
-            Console.Read();
-
-
         }
 
         public static void WriteTitle(int margeLeftTitle, int margeTopTitle)
@@ -99,7 +98,7 @@ namespace Spicy_Nvader
                         Selection();
                         break;
                 }
-            } while (true);
+            } while (IsGameNotLaunched);
         }
 
         public static void Erase()
@@ -116,11 +115,15 @@ namespace Spicy_Nvader
             Console.ResetColor();
         }
 
+
         public static void Selection()
         {
             switch (positionMenu)
             {
                 case 1:
+                    Console.Clear();
+                    Console.WriteLine("LE JEU EST EN COURS DE DEVELOPEMENT");
+                    IsGameNotLaunched = false;
                     // Lancer le jeu
                     break;
                 case 2:
@@ -128,6 +131,15 @@ namespace Spicy_Nvader
                     Options();
                     break;
                 case 3:
+                    Console.Clear();
+                    Console.WriteLine("Les Highscores sont en cours de dev");
+
+                    if(Console.ReadKey(true).Key == ConsoleKey.Escape)
+                    {
+                        positionMenu = 1;
+                        Console.Clear();
+                        LaunchMenu();
+                    }
                     // HighScore
                     break;
                 case 4:
@@ -152,14 +164,30 @@ namespace Spicy_Nvader
         {
             int currentLeft = Console.CursorLeft + 15;
             Console.CursorLeft = currentLeft;
-            Console.Write("Sound : ON");
-            Console.CursorLeft += 7;
-            Console.Write("Difficulty : Padawan");
+            if (sound)
+            {
+                Console.Write("Sound : ON");
+                Console.CursorLeft += 7;
+            }
+            else
+            {
+                Console.Write("Sound : OFF");
+                Console.CursorLeft += 6;
+            }
+
+            if (difficulty)
+            {
+                Console.Write("Difficulty : Francis");
+            }
+            else
+            {
+                Console.Write("Difficulty : Lazar");
+            }
             Console.CursorLeft = currentLeft - 2;
             WriteTriangle();
 
             bool navigation = true;
-            bool end = false;
+            bool end = true;
             while (end)
             {
                 switch (Console.ReadKey(true).Key)
@@ -168,7 +196,7 @@ namespace Spicy_Nvader
                         if (!navigation)
                         {
                             Erase();
-                            Console.CursorLeft += 22;
+                            Console.CursorLeft -= 17;
                             WriteTriangle();
                             navigation = true;
                         }
@@ -177,16 +205,76 @@ namespace Spicy_Nvader
                         if (navigation)
                         {
                             Erase();
-                            Console.CursorLeft -= 22;
+                            Console.CursorLeft += 17;
                             WriteTriangle();
                             navigation = false;
                         }
                         break;
+                    case ConsoleKey.Spacebar:
+                        if (navigation)
+                        {
+                            MenuSound();
+                        }
+                        else
+                        {
+                            MenuDifficulty();
+                        }
+                        break;
                     case ConsoleKey.Escape:
-                        end = true;
+                        end = false;
+                        Erase();
+                        Console.CursorLeft = tempos -2;
+                        WriteTriangle();
                         break;
                 }
             }
+        }
+
+        public static void MenuDifficulty()
+        {
+            currentLeft = Console.CursorLeft;
+            Console.CursorLeft += 15;
+            Erase(8);
+            if (difficulty)
+            {
+                difficulty = false;
+                Console.Write("Lazar");
+                Console.CursorLeft = currentLeft;
+            }
+            else
+            {
+                difficulty = true;
+                Console.Write("Francis");
+                Console.CursorLeft = currentLeft;
+            }
+        }
+
+        public static void MenuSound()
+        {
+            currentLeft = Console.CursorLeft;
+            Console.CursorLeft += 10;
+            Erase(3);
+            if (sound)
+            {
+                sound = false;
+                Console.Write("OFF");
+                Console.CursorLeft = currentLeft;
+            }
+            else
+            {
+                sound = true;
+                Console.Write("ON");
+                Console.CursorLeft = currentLeft;
+            }
+        }
+
+        public static void Erase(int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                Console.Write(" ");
+            }
+            Console.CursorLeft -= number;
         }
     }
 }
