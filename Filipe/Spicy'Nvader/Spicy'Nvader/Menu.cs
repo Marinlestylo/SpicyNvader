@@ -43,7 +43,7 @@ namespace Spicy_Nvader
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 2 * SPACE_MENU);
             Console.WriteLine("HighScores");
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 3 * SPACE_MENU);
-            Console.WriteLine("About");
+            Console.WriteLine("About 2");
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 4 * SPACE_MENU);
             Console.WriteLine("Leave Game");
 
