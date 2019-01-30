@@ -43,7 +43,7 @@ namespace Spicy_Nvader
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 2 * SPACE_MENU);
             Console.WriteLine("HighScores");
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 3 * SPACE_MENU);
-            Console.WriteLine("About");
+            Console.WriteLine("About 2");
             Console.SetCursorPosition(MARGE_LEFT_MENU, MARGE_TOP_MENU + 4 * SPACE_MENU);
             Console.WriteLine("Leave Game");
 
@@ -156,8 +156,8 @@ namespace Spicy_Nvader
         {
             int currentLeft = Console.CursorLeft;
             int currentTop = Console.CursorTop;
-            Console.SetCursorPosition(left, top);
-            Console.WriteLine("Créé par Jonathan & Filipe");
+            Console.SetCursorPosition(left + 8, top);
+            Console.WriteLine("Created by Jonathan & Filipe");
             Console.SetCursorPosition(currentLeft, currentTop);
         }
 
