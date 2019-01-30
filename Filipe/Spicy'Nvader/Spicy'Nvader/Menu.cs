@@ -156,8 +156,8 @@ namespace Spicy_Nvader
         {
             int currentLeft = Console.CursorLeft;
             int currentTop = Console.CursorTop;
-            Console.SetCursorPosition(left, top);
-            Console.WriteLine("Créé par Jonathan & Filipe");
+            Console.SetCursorPosition(left + 8, top);
+            Console.WriteLine("Created by Jonathan & Filipe");
             Console.SetCursorPosition(currentLeft, currentTop);
         }
 
