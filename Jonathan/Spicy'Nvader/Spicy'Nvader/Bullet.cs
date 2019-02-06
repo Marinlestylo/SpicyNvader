@@ -11,33 +11,85 @@ namespace Spicy_Nvader
     {
         private const char BULLET_DESIGN = '♦';
 
-        private int _positionX;
-        private int _positionY;
+        public int PosX { get; private set; }
+        public int PosY { get; private set; }
+        public int Direction { get; }
+
+
+        private int _firstYPos;
         private int _maxPositionY;
         
 
-        public Bullet(int posX, int posY, int maxPosY)
+        public bool GonnaDelete { get; set; }
+        
+
+        public Bullet(int posX, int posY, int maxPosY, int direction)
         {
-            _positionX = posX;
-            _positionY = posY;
+            PosX = posX;
+            PosY = posY;
             _maxPositionY = maxPosY;
+            _firstYPos = posY;
+            Direction = direction;
+            GonnaDelete = false;
         }
 
         public void DrawBullet()
         {
+            //Random color = new Random();//POUR LE FLASHY
             int currentLeft = Console.CursorLeft;
             int currentTop = Console.CursorTop;
-            Console.SetCursorPosition(_positionX, _positionY);
+            Console.SetCursorPosition(PosX, PosY + Direction);
+            Console.Write(' ');
+            Console.SetCursorPosition(PosX, PosY);
+            //int cool = color.Next(10, 16);//POUR LE FLASHY
+            //Console.ForegroundColor = (ConsoleColor)cool;//POUR LE FLASHY
             Console.Write(BULLET_DESIGN);
             Console.SetCursorPosition(currentLeft, currentTop);
         }
 
-        public void MoveTop()
+        public void EraseBullet()
         {
-            DrawBullet();
-            if (_positionY > _maxPositionY)
+            if (GonnaDelete)
             {
-                _positionY--;
+                Console.Write('K');
+            }
+        }
+
+        public void UpdateBullet()
+        {
+            if (Program.tics % 2291 == 0 && Direction == 1)
+            {
+                if (PosY >= _maxPositionY)
+                {
+                    DrawBullet();
+                    PosY -= Direction;
+                }
+                else
+                {
+                    int currentLeft = Console.CursorLeft;
+                    int currentTop = Console.CursorTop;
+                    Console.SetCursorPosition(PosX, _maxPositionY);
+                    Console.Write(' ');
+                    Console.SetCursorPosition(currentLeft, currentTop);
+                    GonnaDelete = true;
+                }
+            }
+            else if (Program.tics % 2291 == 0 && Direction == -1)
+            {
+                if (PosY <= _maxPositionY)
+                {
+                    DrawBullet();
+                    PosY -= Direction;
+                }
+                else
+                {
+                    int currentLeft = Console.CursorLeft;
+                    int currentTop = Console.CursorTop;
+                    Console.SetCursorPosition(PosX, _maxPositionY);
+                    Console.Write(' ');
+                    Console.SetCursorPosition(currentLeft, currentTop);
+                    GonnaDelete = true;
+                }
             }
         }
     }

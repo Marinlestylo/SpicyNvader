@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{03FF0654-2AD6-4A87-A686-EFF3ABC645F6}</ProjectGuid>
+    <ProjectGuid>{7C294401-BB04-4EC9-9DD6-25E15D6EC9AE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Spicy_Nvader</RootNamespace>
-    <AssemblyName>Spicy%27Nvader</AssemblyName>
+    <RootNamespace>testEnemy</RootNamespace>
+    <AssemblyName>testEnemy</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,9 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
     <Compile Include="Enemy.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
