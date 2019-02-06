@@ -1,4 +1,10 @@
-﻿using System;
+﻿// ETML
+// Auteur: friedlijo & andradebfi
+// Date: 30.01.2019
+// Description: Jeu Spicy'Nvader
+//
+
+using System;
 
 namespace Spicy_Nvader
 {
