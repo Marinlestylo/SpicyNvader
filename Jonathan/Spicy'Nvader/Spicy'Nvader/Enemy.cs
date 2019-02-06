@@ -23,7 +23,7 @@ namespace Spicy_Nvader
         private const string ERASE = "           ";
 
        
-        private Bullet bull;
+        //private Bullet bull;
 
         private static readonly string[] ENEMY = new string[8]
         {
@@ -110,10 +110,13 @@ namespace Spicy_Nvader
 
         public void EnemyShoots()
         {
-            if (bull == null)
+            for (int i = 0; i < Program.allBullets.Length - 1; i++)//La dernière pos est pour le joueur
             {
-                bull = new Bullet(_currentLeftPos, _currentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 1, -1);
-                bull.DrawBullet();
+                if (Program.allBullets[i] == null)//Si le tableau a une place vide on crée la bullet dans cette case sinon on ne crée pas de bullet
+                {
+                    Program.allBullets[i] = new Bullet(_currentLeftPos, _currentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 1, -1);
+                    return;
+                }
             }
         }
 
@@ -122,14 +125,6 @@ namespace Spicy_Nvader
             if (Program.rnd.Next(1, 500001) == 666)
             {
                 EnemyShoots();
-            }
-            if (bull != null)
-            {
-                bull.UpdateBullet();
-                if (bull.GonnaDelete)
-                {
-                    bull = null;
-                }
             }
             if (Program.tics % 10000 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
             {

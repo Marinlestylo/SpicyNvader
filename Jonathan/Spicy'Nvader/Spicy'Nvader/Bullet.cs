@@ -35,14 +35,11 @@ namespace Spicy_Nvader
 
         public void DrawBullet()
         {
-            //Random color = new Random();//POUR LE FLASHY
             int currentLeft = Console.CursorLeft;
             int currentTop = Console.CursorTop;
             Console.SetCursorPosition(PosX, PosY + Direction);
             Console.Write(' ');
             Console.SetCursorPosition(PosX, PosY);
-            //int cool = color.Next(10, 16);//POUR LE FLASHY
-            //Console.ForegroundColor = (ConsoleColor)cool;//POUR LE FLASHY
             Console.Write(BULLET_DESIGN);
             Console.SetCursorPosition(currentLeft, currentTop);
         }
@@ -51,7 +48,8 @@ namespace Spicy_Nvader
         {
             if (GonnaDelete)
             {
-                Console.Write('K');
+                Console.SetCursorPosition(PosX, PosY + Direction);
+                Console.Write(' ');
             }
         }
 

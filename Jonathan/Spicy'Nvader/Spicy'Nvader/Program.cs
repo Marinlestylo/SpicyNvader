@@ -9,7 +9,7 @@ namespace Spicy_Nvader
         public const int HEIGHT_OF_WINDOWS = 80;
         public const int MARGIN = 1;//Marge de chaque de côté     
         public static int tics = 0;
-        public static List<Bullet> allBullet = new List<Bullet>();
+        public static Bullet[] allBullets;
         public static Enemy[,] enemySwarm;
         public static Random rnd = new Random();
         static void Main (string[] args)
@@ -20,9 +20,10 @@ namespace Spicy_Nvader
             Console.BufferWidth = WIDTH_OF_WIDOWS;
             Console.SetWindowPosition(0,0);
             Console.CursorVisible = false;
+            allBullets = new Bullet[5 + 1];//+ 1 car le joueur doit pouvoir tirer sa bullet
             Player p1 = new Player();
             p1.DrawPlayer();
-            CreateEnemySwarm(1, 1);
+            CreateEnemySwarm(5, 5);
             /*Enemy e1 = new Enemy(15, 10);
             e1.DrawEnemy();*/
             while (true)
@@ -71,26 +72,29 @@ namespace Spicy_Nvader
 
         public static void Collision()
         {
-            for(int k = 0; k < allBullet.Count; k++)
+            for(int k = 0; k < allBullets.Length; k++)
             {
-                if (allBullet[k].Direction == 1)
+                if (allBullets[k] != null)
                 {
-                    for (int i = 0; i < enemySwarm.GetLength(0); i++)
+                    allBullets[k].UpdateBullet();
+                    if (allBullets[k].Direction == 1)
                     {
-                        for (int j = 0; j < enemySwarm.GetLength(1); j++)
+                        for (int i = 0; i < enemySwarm.GetLength(0); i++)
                         {
-                            if (enemySwarm[i, j] != null)
+                            for (int j = 0; j < enemySwarm.GetLength(1); j++)
                             {
-                                enemySwarm[i, j].EnemyGetShot(allBullet[k]);
+                                if (enemySwarm[i, j] != null)
+                                {
+                                    enemySwarm[i, j].EnemyGetShot(allBullets[k]);
+                                }
                             }
                         }
                     }
-                }
-                if (allBullet[k].GonnaDelete)
-                {
-                    allBullet.RemoveAt(k);
-                    allBullet[k].EraseBullet();
-                    k--;//Pour ne pas aller trop loin dans la boucle
+                    if (allBullets[k].GonnaDelete)
+                    {
+                        allBullets[k].EraseBullet();
+                        allBullets[k] = null;
+                    }
                 }
             }
         }

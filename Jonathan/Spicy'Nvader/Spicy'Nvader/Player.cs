@@ -24,7 +24,7 @@ namespace Spicy_Nvader
         private const string ERASE = "           ";//string de 11 espace pour effacer le joueur
         private const int VALUE_OF_MOVEMENT = 2;//Nombre de case que parcourt le joueur à chaque fois
         private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length;//Position top en fonction de la hauteur de la console - la taille du joueur
-        public Bullet shoot;
+        //public Bullet shoot;
 
 
         private int _playerPreviousPosition;//Ancienne position du joueur
@@ -81,9 +81,10 @@ namespace Spicy_Nvader
         /// </summary>
         public void Shoot()
         {
-            shoot = new Bullet(_playerPosition, topPosition - 2, 1, 1);
-            shoot.DrawBullet();
-            Program.allBullet.Add(shoot);
+            if (Program.allBullets[Program.allBullets.Length - 1] == null)//Si il n'y a pas d'autre bullet, on peut tirer sinon non
+            {
+                Program.allBullets[Program.allBullets.Length - 1] = new Bullet(_playerPosition, topPosition - 2, 1, 1);
+            }
         }
 
         /// <summary>
@@ -104,28 +105,11 @@ namespace Spicy_Nvader
         }
 
         /// <summary>
-        ///Si il y a une bullet, on appelle sa métode update. Si on doit supprimer la bullet (car elle est arrivée en haut ou elle a colisionné un ennemi), on la set a null 
-        /// </summary>
-        public void UpdateShoot()
-        {
-            if (shoot != null)//"shoot" c'est le nom de la bullet
-            {
-                shoot.UpdateBullet();
-                if (shoot.GonnaDelete)//c'est un bool qui se set a true si on doit delete la bullet
-                {
-                    shoot = null;
-                }
-            }
-        }
-
-
-        /// <summary>
         /// Gère les update des bullets ainsi que le timing auquel le joueur pour tirer.
         /// Permet de gérer les actions du joueur via un switch. Il peut faire 3 choses : Aller à droite, aller à gauche et tirer.
         /// </summary>
         public void PlayerUpdate()
         {
-            UpdateShoot();
             if (Console.KeyAvailable)
             {
                 switch (Console.ReadKey(true).Key)//Lis la touche du clavier sur laquelle on appuie
@@ -151,10 +135,7 @@ namespace Spicy_Nvader
                         }
                         break;
                     case ConsoleKey.Spacebar://set le tir sur la touche espace
-                        if (shoot == null)//Si il n'y a pas d'autre bullet, on peut tirer sinon non
-                        {
-                            Shoot();
-                        }
+                        Shoot();
                         break;
                 }
             }
