@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.IO;
 using System.Timers;
 
 namespace Spicy_Nvader
@@ -184,6 +185,8 @@ namespace Spicy_Nvader
             {
                 case 1:
                     Console.Clear();
+                    Console.SetWindowSize(Program.WIDTH_OF_WIDOWS, Program.HEIGHT_OF_WINDOWS);
+                    Console.SetBufferSize(Program.WIDTH_OF_WIDOWS, Program.HEIGHT_OF_WINDOWS);
                     Console.WriteLine("LE JEU EST EN COURS DE DEVELOPEMENT");
                     _startPressed = false;
                     // Lancer le jeu
