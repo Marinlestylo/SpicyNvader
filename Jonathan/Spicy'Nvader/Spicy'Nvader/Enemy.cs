@@ -9,21 +9,13 @@ namespace Spicy_Nvader
     public class Enemy
     {
         //Pour la hitbox de l'ennemy
-        public int MinX { get; private set; }
-        public int MaxX { get; private set; }
-        public int MaxY { get; private set; }
         public bool GonnaDelete { get; private set; }
-
+        public int MinX { get; private set; }//tout à gauche
+        public int MaxX { get; private set; }//tout à droite
+        public int MaxY { get; private set; }//tout en bas
         private int _currentTopPos;//Tout en haut de l'ennemi
-
         private int _currentLeftPos;
-        private int _previousTopPos;
-        private int _previousLeftPos;
         private int _direction;
-        private const string ERASE = "           ";
-
-       
-        //private Bullet bull;
 
         private static readonly string[] ENEMY = new string[8]
         {
@@ -40,29 +32,19 @@ namespace Spicy_Nvader
         {
             _currentTopPos = topPos;
             _currentLeftPos = leftPos;
-            _previousTopPos = _currentTopPos;
-            _previousLeftPos = _currentLeftPos;
             _direction = 1;
             GonnaDelete = false;
         }
 
         public void DrawEnemy()
         {
-            int cursorLeft = Console.CursorLeft;
-            int cursorTop = Console.CursorTop;
-
-            for (int i = 0; i < ENEMY.Length; i++)//Boucle pour effacer l'ancienne position de l'ennemi
-            {
-                Console.SetCursorPosition(_previousLeftPos - ENEMY[0].Length / 2, _previousTopPos + i);
-                Console.Write(ERASE);
-            }
             for (int i = 0; i < ENEMY.Length; i++)//Boucle pour dessiner l'ennemi
             {
-                Console.SetCursorPosition(_currentLeftPos - ENEMY[0].Length / 2, _currentTopPos + i);
-                Console.Write(ENEMY[i]);
+                for (int j = 0; j < ENEMY[i].Length; j++)
+                {
+                    Program.allChars[_currentTopPos + i][_currentLeftPos - ENEMY[0].Length / 2 + j] = ENEMY[i][j];
+                }
             }
-
-            Console.SetCursorPosition(cursorLeft, cursorTop);
         }
 
         public void MoveEnemy()
@@ -77,18 +59,12 @@ namespace Spicy_Nvader
                 _currentTopPos += 5;
                 _direction *= -1;
             }
-            else
-            {
-                _previousTopPos = _currentTopPos;
-            }
-            _previousLeftPos = _currentLeftPos;
+
             _currentLeftPos += _direction;
 
             MinX = _currentLeftPos - ENEMY[0].Length / 2;
             MaxX = _currentLeftPos + ENEMY[0].Length / 2;
             MaxY = _currentTopPos + ENEMY.Length; ;
-
-            DrawEnemy();
         }
 
         public void EnemyGetShot(Bullet bull)
@@ -100,11 +76,11 @@ namespace Spicy_Nvader
                 int cursorTop = Console.CursorTop;
                 bull.GonnaDelete = true;
 
-                for (int i = 0; i < ENEMY.Length; i++)//Boucle pour effacer l'ancienne position de l'ennemi
+                /*for (int i = 0; i < ENEMY.Length; i++)//Boucle pour effacer l'ancienne position de l'ennemi
                 {
                     Console.SetCursorPosition(_currentLeftPos - ENEMY[0].Length / 2, _previousTopPos + i);
                     Console.Write(ERASE);
-                }
+                }*/
             }
         }
 
@@ -130,6 +106,7 @@ namespace Spicy_Nvader
             {
                 MoveEnemy();
             }
+            DrawEnemy();
         }
     }
 }

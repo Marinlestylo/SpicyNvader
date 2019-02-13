@@ -21,13 +21,10 @@ namespace Spicy_Nvader
             "| / |@| \\ |",
             "|/  |@|  \\|"
         };
-        private const string ERASE = "           ";//string de 11 espace pour effacer le joueur
         private const int VALUE_OF_MOVEMENT = 2;//Nombre de case que parcourt le joueur à chaque fois
-        private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length;//Position top en fonction de la hauteur de la console - la taille du joueur
-        //public Bullet shoot;
+        private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)
 
 
-        private int _playerPreviousPosition;//Ancienne position du joueur
         private int _playerPosition;//Nouvelle position du joueur
         private int _playerLives;//Le nombe de vie du joueur
         private int _playerScore;//Valeur du score du joueur
@@ -38,31 +35,22 @@ namespace Spicy_Nvader
         public Player()
         {
             _playerPosition = Program.WIDTH_OF_WIDOWS / 2;
-            _playerPreviousPosition = _playerPosition;
             _playerLives = 3;
         }
 
         /// <summary>
-        /// Dessine 2 choses : Va a la position précédente du joueur et écris sur toute la hauteur du joueur des lignes d'espace pour effacer "l'ancien" joueur.
-        /// Puis va a la nouvelle position du joueur et le dessine via une boucle
+        /// Via une double boucle, cette méthode stocke chaque caractère du dessins du player à la bonne position dans le tableau "allChars"
         /// </summary>
         public void DrawPlayer()
         {
-            //Random color = new Random();//POUR LE FLASHY
-            for (int i = 0; i < PLAYER.Length; i++)//Boucle pour effacer l'ancien joueur
+            for (int i = 0; i < PLAYER.Length; i++)//Boucle pour chaque ligne
             {
-                Console.SetCursorPosition(_playerPreviousPosition - PLAYER[0].Length / 2, topPosition + i);//Vu que la position du joueur est au milieu du dessin du joueur et tout en haut du dessin, on revient toujours de la moitié de la largueur pour dessiner le joueur
-                Console.Write(ERASE);
+                for (int j = 0; j < PLAYER[i].Length; j++)//Boucle pour chaque char
+                {
+                    Program.allChars[topPosition + i][_playerPosition - PLAYER[0].Length / 2 + j] = PLAYER[i][j];
+                }
             }
-            for (int i = 0; i < PLAYER.Length; i++)//Boucle pour dessiner le nouveau joueur
-            {
-                Console.SetCursorPosition(_playerPosition - PLAYER[0].Length / 2, topPosition + i);
-                //int cool = color.Next(10, 16);//POUR LE FLASHY
-                //Console.ForegroundColor = (ConsoleColor)cool;//POUR LE FLASHY
-                Console.Write(PLAYER[i]);//On va écrire la string du tableau PLAYER
-            }
-            //Console.ResetColor();//Enlever les couleurs FLASHY
-            Console.SetCursorPosition(_playerPosition, topPosition);//On se remet au centre du joueur
+
         }
 
         /// <summary>
@@ -71,9 +59,7 @@ namespace Spicy_Nvader
         /// <param name="movement">valeur de déplacement</param>
         public void Move(int movement)
         {
-            _playerPreviousPosition = _playerPosition;
             _playerPosition += movement;
-            DrawPlayer();
         }
 
         /// <summary>
@@ -105,8 +91,8 @@ namespace Spicy_Nvader
         }
 
         /// <summary>
-        /// Gère les update des bullets ainsi que le timing auquel le joueur pour tirer.
         /// Permet de gérer les actions du joueur via un switch. Il peut faire 3 choses : Aller à droite, aller à gauche et tirer.
+        /// Permet également d'empêcher le joueur d'aller trop à gauche ou trop à droite (Pas de politique ;>)
         /// </summary>
         public void PlayerUpdate()
         {
@@ -139,6 +125,7 @@ namespace Spicy_Nvader
                         break;
                 }
             }
+            DrawPlayer();
         }
     }
 }

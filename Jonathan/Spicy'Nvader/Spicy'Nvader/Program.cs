@@ -10,6 +10,8 @@ namespace Spicy_Nvader
         public const int WIDTH_OF_WIDOWS = 150;
         public const int HEIGHT_OF_WINDOWS = 80;
         public const int MARGIN = 1;//Marge de chaque de côté     
+        public static char[][] allChars = new char[HEIGHT_OF_WINDOWS-1][];
+        private static string everyPixel;
         public static int tics = 0;
         public static Bullet[] allBullets;
         public static Enemy[,] enemySwarm;
@@ -23,20 +25,30 @@ namespace Spicy_Nvader
             Console.SetWindowPosition(0,0);
             Console.CursorVisible = false;
             allBullets = new Bullet[5 + 1];//+ 1 car le joueur doit pouvoir tirer sa bullet
-            Player p1 = new Player();
-            p1.DrawPlayer();
             CreateEnemySwarm(5, 5);
-            /*Enemy e1 = new Enemy(15, 10);
-            e1.DrawEnemy();*/
+            Player p1 = new Player();
+            //Enemy e1 = new Enemy(15, 10);
             Stopwatch s = new Stopwatch();
-            while (true)
+
+
+            while (true)//boucle de jeu
             {
-                s.Restart();
-                if (tics == int.MaxValue)
+                s.Restart();//timer
+
+
+                if (tics == int.MaxValue)//tics (si les tics sont au max, on les remets à 0)
                     tics = 0;
+
+                ResetArray();
+                //p1.DrawPlayer();
+
                 p1.PlayerUpdate();
                 Collision();
                 UpdateEnnemy();
+                //e1.EnemyUpdate();
+
+                FromArrayToString();
+
                 
                 //e1.EnemyUpdate();
                 tics++;
@@ -44,6 +56,25 @@ namespace Spicy_Nvader
                 Debug.WriteLine(ts);
                 Thread.Sleep(10);
             }
+        }
+
+        public static void ResetArray()
+        {
+            for (int i = 0; i < allChars.Length; i++)//Boucle pour reset le tableau de char
+            {
+                allChars[i] = "".PadLeft(WIDTH_OF_WIDOWS - 1).ToCharArray();//La ligne entière du tableau sera rempli d'espace. On met le -1 car le 80eme char est à la pos 79
+            }
+        }
+
+        public static void FromArrayToString()
+        {
+            Console.SetCursorPosition(0, 0);
+            everyPixel = "";
+            for (int i = 0; i < allChars.Length; i++)
+            {
+                everyPixel += new string(allChars[i]) + " ";
+            }
+            Console.Write(everyPixel);
         }
 
         public static void CreateEnemySwarm(int width, int height)

@@ -35,13 +35,7 @@ namespace Spicy_Nvader
 
         public void DrawBullet()
         {
-            int currentLeft = Console.CursorLeft;
-            int currentTop = Console.CursorTop;
-            Console.SetCursorPosition(PosX, PosY + Direction);
-            Console.Write(' ');
-            Console.SetCursorPosition(PosX, PosY);
-            Console.Write(BULLET_DESIGN);
-            Console.SetCursorPosition(currentLeft, currentTop);
+            Program.allChars[PosY][PosX] = BULLET_DESIGN; 
         }
 
         public void EraseBullet()
@@ -53,22 +47,16 @@ namespace Spicy_Nvader
             }
         }
 
-        public void UpdateBullet()
+        public void BulletMove()
         {
-            if (Program.tics % 1 == 0 && Direction == 1)
+            if (Program.tics % 10 == 0 && Direction == 1)
             {
                 if (PosY >= _maxPositionY)
                 {
-                    DrawBullet();
                     PosY -= Direction;
                 }
                 else
                 {
-                    int currentLeft = Console.CursorLeft;
-                    int currentTop = Console.CursorTop;
-                    Console.SetCursorPosition(PosX, _maxPositionY);
-                    Console.Write(' ');
-                    Console.SetCursorPosition(currentLeft, currentTop);
                     GonnaDelete = true;
                 }
             }
@@ -76,19 +64,18 @@ namespace Spicy_Nvader
             {
                 if (PosY <= _maxPositionY)
                 {
-                    DrawBullet();
                     PosY -= Direction;
                 }
                 else
                 {
-                    int currentLeft = Console.CursorLeft;
-                    int currentTop = Console.CursorTop;
-                    Console.SetCursorPosition(PosX, _maxPositionY);
-                    Console.Write(' ');
-                    Console.SetCursorPosition(currentLeft, currentTop);
                     GonnaDelete = true;
                 }
             }
+        }
+
+        public void UpdateBullet()
+        {
+            BulletMove();
         }
     }
 }
