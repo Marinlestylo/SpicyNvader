@@ -55,7 +55,7 @@ namespace Spicy_Nvader
 
         public void UpdateBullet()
         {
-            if (Program.tics % 2291 == 0 && Direction == 1)
+            if (Program.tics % 1 == 0 && Direction == 1)
             {
                 if (PosY >= _maxPositionY)
                 {

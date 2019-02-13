@@ -8,8 +8,7 @@ namespace testEnemy
 {
     public class Enemy
     {
-        private const char ENEMY_DESIGN = '¥';
-
+        private readonly string[] ENEMY = new string[3] {"███", "███", "███" };
         private int _topPos;
         private int _leftPos;
         public Enemy()

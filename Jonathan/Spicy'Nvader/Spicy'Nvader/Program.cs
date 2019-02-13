@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Spicy_Nvader
 {
@@ -26,8 +28,10 @@ namespace Spicy_Nvader
             CreateEnemySwarm(5, 5);
             /*Enemy e1 = new Enemy(15, 10);
             e1.DrawEnemy();*/
+            Stopwatch s = new Stopwatch();
             while (true)
             {
+                s.Restart();
                 if (tics == int.MaxValue)
                     tics = 0;
                 p1.PlayerUpdate();
@@ -36,6 +40,9 @@ namespace Spicy_Nvader
                 
                 //e1.EnemyUpdate();
                 tics++;
+                int ts = (int)s.ElapsedMilliseconds;
+                Debug.WriteLine(ts);
+                Thread.Sleep(10);
             }
         }
 

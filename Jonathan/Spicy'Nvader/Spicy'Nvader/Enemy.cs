@@ -126,7 +126,7 @@ namespace Spicy_Nvader
             {
                 EnemyShoots();
             }
-            if (Program.tics % 10000 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
+            if (Program.tics % 5 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
             {
                 MoveEnemy();
             }
