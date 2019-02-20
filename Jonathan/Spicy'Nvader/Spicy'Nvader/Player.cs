@@ -9,7 +9,7 @@ namespace Spicy_Nvader
     public class Player
     {     
         private static readonly string[] PLAYER = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
-        {
+        /*{
             "     ▄     ",
             "    / \\    ",
             "   | o |   ",
@@ -20,6 +20,18 @@ namespace Spicy_Nvader
             " / |___| \\ ",
             "| / |@| \\ |",
             "|/  |@|  \\|"
+        };*/
+        {
+            "     █     ",
+            "    █ █    ",
+            "   █ █ █   ",
+            "   █   █   ",//UN GRAND MERCI A KALINVA POUR l'AVIS CRITIQUE APPORTÉ LORS DU DESIGN DU VAISSEAU
+            "   █ █ █   ",
+            "   █   █   ",
+            "  ██ █ ██  ",
+            " █ █████ █ ",
+            "█ █ ███ █ █",
+            "██  ███  ██"
         };
         private const int VALUE_OF_MOVEMENT = 2;//Nombre de case que parcourt le joueur à chaque fois
         private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)

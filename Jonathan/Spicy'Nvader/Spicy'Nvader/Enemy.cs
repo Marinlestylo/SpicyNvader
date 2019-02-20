@@ -64,7 +64,18 @@ namespace Spicy_Nvader
 
             MinX = _currentLeftPos - ENEMY[0].Length / 2;
             MaxX = _currentLeftPos + ENEMY[0].Length / 2;
-            MaxY = _currentTopPos + ENEMY.Length; ;
+            MaxY = _currentTopPos + ENEMY.Length - 1;//Sinon c'est trop bas
+        }
+
+        /// <summary>
+        /// Pour debug
+        /// </summary>
+        public void GetHitBox()
+        {
+            Program.allChars[_currentTopPos][MinX] = '╔';
+            Program.allChars[_currentTopPos][MaxX] = '╗';
+            Program.allChars[MaxY][MinX] = '╚';
+            Program.allChars[MaxY][MaxX] = '╝';
         }
 
         public void EnemyGetShot(Bullet bull)
@@ -107,6 +118,7 @@ namespace Spicy_Nvader
                 MoveEnemy();
             }
             DrawEnemy();
+            GetHitBox();//DEBUG
         }
     }
 }

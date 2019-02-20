@@ -13,7 +13,7 @@ namespace Spicy_Nvader
 
         public int PosX { get; private set; }
         public int PosY { get; private set; }
-        public int Direction { get; }
+        public int Direction { get; private set; }
 
 
         private int _firstYPos;
@@ -38,18 +38,9 @@ namespace Spicy_Nvader
             Program.allChars[PosY][PosX] = BULLET_DESIGN; 
         }
 
-        public void EraseBullet()
-        {
-            if (GonnaDelete)
-            {
-                Console.SetCursorPosition(PosX, PosY + Direction);
-                Console.Write(' ');
-            }
-        }
-
         public void BulletMove()
         {
-            if (Program.tics % 10 == 0 && Direction == 1)
+            if (Program.tics % 3 == 0 && Direction == 1)
             {
                 if (PosY >= _maxPositionY)
                 {
@@ -76,6 +67,7 @@ namespace Spicy_Nvader
         public void UpdateBullet()
         {
             BulletMove();
+            DrawBullet();
         }
     }
 }
