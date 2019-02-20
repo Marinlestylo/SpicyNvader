@@ -9,7 +9,7 @@ namespace Spicy_Nvader
     {
         public const int WIDTH_OF_WIDOWS = 150;
         public const int HEIGHT_OF_WINDOWS = 80;
-        public const int MARGIN = 1;//Marge de chaque de côté     
+        public const int MARGIN = 4;//Marge de chaque de côté     
         public static char[][] allChars = new char[HEIGHT_OF_WINDOWS-1][];//tableau de tous les caractères
         private static string everyPixel;//String qui va tout afficher
         public static int tics = 0;
@@ -23,7 +23,7 @@ namespace Spicy_Nvader
             Console.BufferHeight = HEIGHT_OF_WINDOWS;
             Console.BufferWidth = WIDTH_OF_WIDOWS;
             Console.CursorVisible = false;
-            allBullets = new Bullet[5 + 1];//+ 1 car le joueur doit pouvoir tirer sa bullet
+            allBullets = new Bullet[10 + 1];//+ 1 car le joueur doit pouvoir tirer sa bullet
             CreateEnemySwarm(5, 5);
             Player p1 = new Player();
             Stopwatch s = new Stopwatch();
@@ -60,6 +60,8 @@ namespace Spicy_Nvader
 
         public static void FromArrayToString()
         {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(everyPixel);
             Console.SetCursorPosition(0, 0);
             everyPixel = "";
             for (int i = 0; i < allChars.Length; i++)

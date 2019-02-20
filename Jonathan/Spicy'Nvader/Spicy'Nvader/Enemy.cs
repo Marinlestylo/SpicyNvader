@@ -83,15 +83,7 @@ namespace Spicy_Nvader
             if (bull.PosX > MinX && bull.PosX < MaxX && bull.PosY > _currentTopPos && bull.PosY < MaxY)
             {
                 GonnaDelete = true;
-                int cursorLeft = Console.CursorLeft;
-                int cursorTop = Console.CursorTop;
                 bull.GonnaDelete = true;
-
-                /*for (int i = 0; i < ENEMY.Length; i++)//Boucle pour effacer l'ancienne position de l'ennemi
-                {
-                    Console.SetCursorPosition(_currentLeftPos - ENEMY[0].Length / 2, _previousTopPos + i);
-                    Console.Write(ERASE);
-                }*/
             }
         }
 
@@ -101,7 +93,7 @@ namespace Spicy_Nvader
             {
                 if (Program.allBullets[i] == null)//Si le tableau a une place vide on crée la bullet dans cette case sinon on ne crée pas de bullet
                 {
-                    Program.allBullets[i] = new Bullet(_currentLeftPos, _currentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 1, -1);
+                    Program.allBullets[i] = new Bullet(_currentLeftPos, _currentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 3, -1);
                     return;
                 }
             }
@@ -109,16 +101,16 @@ namespace Spicy_Nvader
 
         public void EnemyUpdate()
         {
-            if (Program.rnd.Next(1, 500001) == 666)
+            if (Program.rnd.Next(1, 100) > 90)
             {
                 EnemyShoots();
             }
-            if (Program.tics % 5 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
+            if (Program.tics % 10 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
             {
                 MoveEnemy();
             }
             DrawEnemy();
-            GetHitBox();//DEBUG
+            //GetHitBox();//DEBUG
         }
     }
 }

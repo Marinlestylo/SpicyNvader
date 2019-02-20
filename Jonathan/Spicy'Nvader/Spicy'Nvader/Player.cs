@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Spicy_Nvader
 {
     public class Player
-    {     
+    {
         private static readonly string[] PLAYER = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
         /*{
             "     ▄     ",
@@ -22,20 +22,32 @@ namespace Spicy_Nvader
             "|/  |@|  \\|"
         };*/
         {
-            "     █     ",
-            "    █ █    ",
-            "   █ █ █   ",
-            "   █   █   ",//UN GRAND MERCI A KALINVA POUR l'AVIS CRITIQUE APPORTÉ LORS DU DESIGN DU VAISSEAU
-            "   █ █ █   ",
-            "   █   █   ",
-            "  ██ █ ██  ",
-            " █ █████ █ ",
-            "█ █ ███ █ █",
-            "██  ███  ██"
+            "▄",
+            "/ \\",
+            "| o |",
+            "|   |",//UN GRAND MERCI A KALINVA POUR l'AVIS CRITIQUE APPORTÉ LORS DU DESIGN DU VAISSEAU
+            "| o |",
+            "|   |",
+            "/| o |\\",
+            "/ |___| \\",
+            "| / |@| \\ |",
+            "|/  |@|  \\|"
         };
+        /*{
+            "     ▄    ",
+            "   ▄███▄   ",
+            "  █  █  █  ",
+            "  █  █  █  ",//UN GRAND MERCI A KALINVA POUR l'AVIS CRITIQUE APPORTÉ LORS DU DESIGN DU VAISSEAU
+            "  █▀▄█▄▀█  ",
+            "  █     █  ",
+            "  █     █ ",
+            " █   ▄   █ ",
+            "█   █ █   █",
+            " ▀██   ██▀ "
+        };*/
         private const int VALUE_OF_MOVEMENT = 2;//Nombre de case que parcourt le joueur à chaque fois
         private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)
-
+        //Hauteur : 69
 
         private int _playerPosition;//Nouvelle position du joueur
         private int _playerLives;//Le nombe de vie du joueur
@@ -59,7 +71,7 @@ namespace Spicy_Nvader
             {
                 for (int j = 0; j < PLAYER[i].Length; j++)//Boucle pour chaque char
                 {
-                    Program.allChars[topPosition + i][_playerPosition - PLAYER[0].Length / 2 + j] = PLAYER[i][j];
+                    Program.allChars[topPosition + i][_playerPosition - PLAYER[i].Length / 2 + j] = PLAYER[i][j];
                 }
             }
 
@@ -88,8 +100,13 @@ namespace Spicy_Nvader
         /// <summary>
         /// Si le joueur se fait tirer dessus, on regarde si il lui reste plusieurs vies ou non. Si oui, il perd une vie et le jeu continue. Sinon le jeu s'arrête et affiche un message.
         /// </summary>
-        public void GetShot()
+        public void GetShot(Bullet bull)
         {
+
+            if (bull.PosY > topPosition)// CONDITION A FINIR  (La hit box)
+            {
+
+            }
             if (_playerLives > 1)
             {
                 _playerLives--;

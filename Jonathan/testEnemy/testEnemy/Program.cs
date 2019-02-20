@@ -10,7 +10,7 @@ namespace testEnemy
     {
         private const int HEIGHT_OF_WINDOWS = 80;
         private const int WIDTH_OF_WIDOWS = 150;
-        private const char A = '█';
+        private const char H = '█';
         //private static readonly string[] ENEMY = new string[3] { "███", "███", "███",};
         private static string[] ENEMY;
         private static int _topPos = 2;

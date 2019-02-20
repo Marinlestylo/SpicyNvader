@@ -51,7 +51,7 @@ namespace Spicy_Nvader
                     GonnaDelete = true;
                 }
             }
-            else if (Program.tics % 2291 == 0 && Direction == -1)
+            else if (Program.tics % 3 == 0 && Direction == -1)
             {
                 if (PosY <= _maxPositionY)
                 {
