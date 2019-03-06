@@ -18,7 +18,7 @@ namespace Spicy_Nvader
         private int _direction;
 
         private static readonly string[] ENEMY = new string[8]
-        {
+        /*{
             "  ▄     ▄  ",
             "   █   █   ",
             "  ███████  ",
@@ -26,7 +26,16 @@ namespace Spicy_Nvader
             "███████████",
             "█ ███████ █",
             "█ █     █ █",
-            "   ██ ██   " }; //Design du monstre
+            "   ██ ██   " }; //Design du monstre*/
+            {
+            "▄     ▄",
+            "█   █",
+            "███████",
+            "██ ███ ██",
+            "███████████",
+            "█ ███████ █",
+            "█ █     █ █",
+            "██ ██" }; //Design du monstre
 
         public Enemy(int topPos, int leftPos)
         {
@@ -42,7 +51,7 @@ namespace Spicy_Nvader
             {
                 for (int j = 0; j < ENEMY[i].Length; j++)
                 {
-                    Program.allChars[_currentTopPos + i][_currentLeftPos - ENEMY[0].Length / 2 + j] = ENEMY[i][j];
+                    Program.allChars[_currentTopPos + i][_currentLeftPos - ENEMY[i].Length / 2 + j] = ENEMY[i][j];
                 }
             }
         }
@@ -62,8 +71,8 @@ namespace Spicy_Nvader
 
             _currentLeftPos += _direction;
 
-            MinX = _currentLeftPos - ENEMY[0].Length / 2;
-            MaxX = _currentLeftPos + ENEMY[0].Length / 2;
+            MinX = _currentLeftPos - ENEMY[4].Length / 2;
+            MaxX = _currentLeftPos + ENEMY[4].Length / 2;
             MaxY = _currentTopPos + ENEMY.Length - 1;//Sinon c'est trop bas
         }
 
@@ -80,7 +89,7 @@ namespace Spicy_Nvader
 
         public void EnemyGetShot(Bullet bull)
         {
-            if (bull.PosX > MinX && bull.PosX < MaxX && bull.PosY > _currentTopPos && bull.PosY < MaxY)
+            if (bull.PosX >= MinX && bull.PosX <= MaxX && bull.PosY >= _currentTopPos && bull.PosY <= MaxY)
             {
                 GonnaDelete = true;
                 bull.GonnaDelete = true;
@@ -101,7 +110,7 @@ namespace Spicy_Nvader
 
         public void EnemyUpdate()
         {
-            if (Program.rnd.Next(1, 100) > 90)
+            if (Program.rnd.Next(1, 1000) > 990 && Program.tics % 5 == 0)
             {
                 EnemyShoots();
             }

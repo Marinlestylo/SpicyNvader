@@ -9,7 +9,8 @@ namespace Spicy_Nvader
     {
         public const int WIDTH_OF_WIDOWS = 150;
         public const int HEIGHT_OF_WINDOWS = 80;
-        public const int MARGIN = 4;//Marge de chaque de côté     
+        public const int MARGIN = 4;//Marge de chaque de côté
+        public static bool game = true;
         public static char[][] allChars = new char[HEIGHT_OF_WINDOWS-1][];//tableau de tous les caractères
         private static string everyPixel;//String qui va tout afficher
         public static int tics = 0;
@@ -29,7 +30,7 @@ namespace Spicy_Nvader
             Stopwatch s = new Stopwatch();
 
 
-            while (true)//boucle de jeu
+            while (game)//boucle de jeu
             {
                 s.Restart();//timer
 
@@ -48,6 +49,8 @@ namespace Spicy_Nvader
                 int ts = (int)s.ElapsedMilliseconds;//"Stabiliser" la vitesse, indépendemment des ordis
                 Thread.Sleep(10);
             }
+            p1.ShowScore();
+            Console.Read();
         }
 
         public static void ResetArray()
@@ -78,7 +81,7 @@ namespace Spicy_Nvader
             {
                 for (int j = 0; j < width; j++)
                 {
-                    enemySwarm[i, j] = new Enemy(i * 8, 5 + j * 12);
+                    enemySwarm[i, j] = new Enemy( 2 + i * 8, 5 + j * 12);
                 }
             }
         }
@@ -104,19 +107,19 @@ namespace Spicy_Nvader
 
         public static void GameUpdate(Player p1)
         {
-            Collision();
+            Collision(p1);
             UpdateEnnemy();
             p1.PlayerUpdate();
         }
 
-        public static void Collision()
+        public static void Collision(Player p1)
         {
             for(int k = 0; k < allBullets.Length; k++)
             {
                 if (allBullets[k] != null)
                 {
                     allBullets[k].UpdateBullet();
-                    if (allBullets[k].Direction == 1)
+                    if (allBullets[k].Direction == 1)//bullet qui montent
                     {
                         for (int i = 0; i < enemySwarm.GetLength(0); i++)
                         {
@@ -125,9 +128,14 @@ namespace Spicy_Nvader
                                 if (enemySwarm[i, j] != null)
                                 {
                                     enemySwarm[i, j].EnemyGetShot(allBullets[k]);
+                                    p1.PlayerScore++;
                                 }
                             }
                         }
+                    }
+                    if (allBullets[k].Direction == -1)//bullet qui descendent
+                    {
+                        p1.GetShot(allBullets[k]);
                     }
                     if (allBullets[k].GonnaDelete)
                     {

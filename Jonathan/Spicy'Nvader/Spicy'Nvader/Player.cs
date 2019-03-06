@@ -8,18 +8,21 @@ namespace Spicy_Nvader
 {
     public class Player
     {
+        private List<Point> touched = new List<Point>();
+        private ConsoleColor color = ConsoleColor.Yellow;
+        private int invincible = 0;
         private static readonly string[] PLAYER = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
         /*{
             "     ▄     ",
-            "    / \\    ",
-            "   | o |   ",
-            "   |   |   ",//UN GRAND MERCI A KALINVA POUR l'AVIS CRITIQUE APPORTÉ LORS DU DESIGN DU VAISSEAU
+            "    / \    ",
             "   | o |   ",
             "   |   |   ",
-            "  /| o |\\  ",
-            " / |___| \\ ",
-            "| / |@| \\ |",
-            "|/  |@|  \\|"
+            "   | o |   ",
+            "   |   |   ",
+            "  /| o |\   ",
+            " / |___| \  ",
+            "| / |@| \ |",
+            "|/  |@|  \|"
         };*/
         {
             "▄",
@@ -45,21 +48,23 @@ namespace Spicy_Nvader
             "█   █ █   █",
             " ▀██   ██▀ "
         };*/
-        private const int VALUE_OF_MOVEMENT = 2;//Nombre de case que parcourt le joueur à chaque fois
+        private const int VALUE_OF_MOVEMENT = 1;//Nombre de case que parcourt le joueur à chaque fois
         private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)
         //Hauteur : 69
 
         private int _playerPosition;//Nouvelle position du joueur
         private int _playerLives;//Le nombe de vie du joueur
-        private int _playerScore;//Valeur du score du joueur
+        public int PlayerScore { get; set; }//Valeur du score du joueur
 
         /// <summary>
-        /// Constructeur de Player. Crée un joueur avec une position et une position précédente qui sont égale, set le nombre de vie a 3 et set le booléen de shoot à true
+        /// Constructeur de Player. Crée un joueur avec une position, un nombre de vie et une liste de points qui peuvent être touché par les ennemis.
         /// </summary>
         public Player()
         {
             _playerPosition = Program.WIDTH_OF_WIDOWS / 2;
-            _playerLives = 3;
+            _playerLives = 9;
+            PlayerScore = 0;
+            GetHitBox();
         }
 
         /// <summary>
@@ -74,7 +79,6 @@ namespace Spicy_Nvader
                     Program.allChars[topPosition + i][_playerPosition - PLAYER[i].Length / 2 + j] = PLAYER[i][j];
                 }
             }
-
         }
 
         /// <summary>
@@ -84,6 +88,10 @@ namespace Spicy_Nvader
         public void Move(int movement)
         {
             _playerPosition += movement;
+            foreach (Point p in touched)
+            {
+                p.X += movement;
+            }
         }
 
         /// <summary>
@@ -97,26 +105,69 @@ namespace Spicy_Nvader
             }
         }
 
+        public void ShowLives()
+        {
+            Program.allChars[0][Program.WIDTH_OF_WIDOWS - 8] = Convert.ToChar(_playerLives.ToString());
+            Program.allChars[0][Program.WIDTH_OF_WIDOWS - 7] = '♥';
+        }
+
+
         /// <summary>
         /// Si le joueur se fait tirer dessus, on regarde si il lui reste plusieurs vies ou non. Si oui, il perd une vie et le jeu continue. Sinon le jeu s'arrête et affiche un message.
         /// </summary>
         public void GetShot(Bullet bull)
         {
 
-            if (bull.PosY > topPosition)// CONDITION A FINIR  (La hit box)
+            if (bull.PosY >= topPosition)//On check que les bullets qui sont à la position du joueur ou plus bas
             {
+                foreach (Point p in touched)
+                {
+                    if (bull.PosX == p.X && bull.PosY == p.Y && Console.ForegroundColor != color)
+                    {
+                        bull.GonnaDelete = true;
+                        //Perdre une vie
+                        if (_playerLives > 1)
+                        {
+                            _playerLives--;
+                            Console.ForegroundColor = color;
+                            invincible = Program.tics + 100;
+                        }
+                        else
+                        {
+                            Program.game = false;
+                        }
+                    }
+                }
+            }
+        }
 
-            }
-            if (_playerLives > 1)
-            {
-                _playerLives--;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Vous avez perdu ! Quel dommage . . . ");
-                Console.WriteLine("Voici votre score : " + _playerScore);
-            }
+        public void ShowScore()
+        {
+            Console.Clear();
+            Console.WriteLine("Vous avez perdu ! Quel dommage . . . ");
+            Console.WriteLine("Voici votre score : " + PlayerScore);
+        }
+
+        public void GetHitBox()
+        {
+            //De gauche à droite
+            touched.Add(new Point(_playerPosition - 5, topPosition + 8));
+            touched.Add(new Point(_playerPosition - 4, topPosition + 7));
+            touched.Add(new Point(_playerPosition - 3, topPosition + 6));
+            touched.Add(new Point(_playerPosition - 2, topPosition + 2));
+            touched.Add(new Point(_playerPosition - 2, topPosition + 3));
+            touched.Add(new Point(_playerPosition - 2, topPosition + 4));
+            touched.Add(new Point(_playerPosition - 2, topPosition + 5));
+            touched.Add(new Point(_playerPosition - 1, topPosition + 1));
+            touched.Add(new Point(_playerPosition, topPosition));
+            touched.Add(new Point(_playerPosition + 1, topPosition + 1));
+            touched.Add(new Point(_playerPosition + 2, topPosition + 2));
+            touched.Add(new Point(_playerPosition + 2, topPosition + 3));
+            touched.Add(new Point(_playerPosition + 2, topPosition + 4));
+            touched.Add(new Point(_playerPosition + 2, topPosition + 5));
+            touched.Add(new Point(_playerPosition + 3, topPosition + 6));
+            touched.Add(new Point(_playerPosition + 4, topPosition + 7));
+            touched.Add(new Point(_playerPosition + 5, topPosition + 8));
         }
 
         /// <summary>
@@ -155,6 +206,11 @@ namespace Spicy_Nvader
                 }
             }
             DrawPlayer();
+            if (Program.tics == invincible && Console.ForegroundColor == color)//invicibilité du joueurs
+            {
+                Console.ResetColor();
+            }
+            ShowLives();
         }
     }
 }
