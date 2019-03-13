@@ -9,7 +9,7 @@ namespace Spicy_Nvader
 {
     public class Bullet
     {
-        private const char BULLET_DESIGN = '♦';
+        private const char BULLET_DESIGN = '▓';
 
         public int PosX { get; private set; }
         public int PosY { get; private set; }

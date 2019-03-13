@@ -15,7 +15,7 @@ namespace Spicy_Nvader
         public int MaxY { get; private set; }//tout en bas
         private int _currentTopPos;//Tout en haut de l'ennemi
         private int _currentLeftPos;
-        private int _direction;
+        //private int _direction;
 
         private static readonly string[] ENEMY = new string[8]
         /*{
@@ -41,7 +41,7 @@ namespace Spicy_Nvader
         {
             _currentTopPos = topPos;
             _currentLeftPos = leftPos;
-            _direction = 1;
+            //_direction = 1;
             GonnaDelete = false;
         }
 
@@ -56,9 +56,9 @@ namespace Spicy_Nvader
             }
         }
 
-        public void MoveEnemy()
+        public void MoveEnemy(int direction)
         {
-            if (_currentLeftPos == (Program.WIDTH_OF_WIDOWS - 1) - (ENEMY[0].Length / 2) - Program.MARGIN && _direction == 1)//Aller à droite
+            /*if (_currentLeftPos == (Program.WIDTH_OF_WIDOWS - 1) - (ENEMY[0].Length / 2) - Program.MARGIN && _direction == 1)//Aller à droite
             {
                 _currentTopPos += 5;
                 _direction *= -1;
@@ -69,11 +69,18 @@ namespace Spicy_Nvader
                 _direction *= -1;
             }
 
-            _currentLeftPos += _direction;
+            _currentLeftPos += _direction;*/
+
+            _currentLeftPos += direction;
 
             MinX = _currentLeftPos - ENEMY[4].Length / 2;
             MaxX = _currentLeftPos + ENEMY[4].Length / 2;
             MaxY = _currentTopPos + ENEMY.Length - 1;//Sinon c'est trop bas
+        }
+
+        public void GoDown(int val)
+        {
+            _currentTopPos += val;
         }
 
         /// <summary>
@@ -116,10 +123,10 @@ namespace Spicy_Nvader
             {
                 EnemyShoots();
             }
-            if (Program.tics % 10 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
+            /*if (Program.tics % 10 == 0)//pour bouger pas trop vite on bouge une fois tous les 10 tics
             {
-                MoveEnemy();
-            }
+                MoveEnemy(_direction);
+            }*/
             DrawEnemy();
             //GetHitBox();//DEBUG
         }

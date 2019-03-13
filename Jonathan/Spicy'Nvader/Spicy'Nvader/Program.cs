@@ -15,7 +15,7 @@ namespace Spicy_Nvader
         private static string everyPixel;//String qui va tout afficher
         public static int tics = 0;
         public static Bullet[] allBullets;
-        public static Enemy[,] enemySwarm;
+        //public static Enemy[,] enemySwarm;
         public static Random rnd = new Random();
         static void Main (string[] args)
         {
@@ -25,8 +25,10 @@ namespace Spicy_Nvader
             Console.BufferWidth = WIDTH_OF_WIDOWS;
             Console.CursorVisible = false;
             allBullets = new Bullet[10 + 1];//+ 1 car le joueur doit pouvoir tirer sa bullet
-            CreateEnemySwarm(5, 5);
+            //CreateEnemySwarm(5, 5);
             Player p1 = new Player();
+            Swarm s1 = new Swarm();
+            s1.Create(5, 5);
             Stopwatch s = new Stopwatch();
 
 
@@ -40,7 +42,7 @@ namespace Spicy_Nvader
 
                 ResetArray();//Remet le tableau à vide
 
-                GameUpdate(p1);//Update TOUT !
+                GameUpdate(p1, s1);//Update TOUT !
 
                 FromArrayToString();//Crée et écrit le string qui contient tout
 
@@ -78,7 +80,7 @@ namespace Spicy_Nvader
             Console.Write(everyPixel);
         }
 
-        public static void CreateEnemySwarm(int width, int height)
+        /*public static void CreateEnemySwarm(int width, int height)
         {
             enemySwarm = new Enemy[height, width];
             for (int i = 0; i < height; i++)
@@ -88,9 +90,9 @@ namespace Spicy_Nvader
                     enemySwarm[i, j] = new Enemy( 2 + i * 8, 5 + j * 12);
                 }
             }
-        }
+        }*/
 
-        public static void UpdateEnnemy()
+        /*public static void UpdateEnnemy()
         {
             for (int i = 0; i < enemySwarm.GetLength(0); i++)
             {
@@ -107,16 +109,17 @@ namespace Spicy_Nvader
 
                 }
             }
-        }
+        }*/
 
-        public static void GameUpdate(Player p1)
+        public static void GameUpdate(Player p1, Swarm s1)
         {
-            Collision(p1);
-            UpdateEnnemy();
+            Collision(p1, s1);
+            //UpdateEnnemy();
+            s1.UpdateSwarm();
             p1.PlayerUpdate();
         }
 
-        public static void Collision(Player p1)
+        public static void Collision(Player p1, Swarm s1)
         {
             for(int k = 0; k < allBullets.Length; k++)//On regarde d'abord toutes les bullets
             {
@@ -125,7 +128,14 @@ namespace Spicy_Nvader
                     allBullets[k].UpdateBullet();//On les update
                     if (allBullets[k].Direction == 1)//bullet qui montent
                     {
-                        for (int i = 0; i < enemySwarm.GetLength(0); i++)//Double boucle pour tous les ennemis
+                        foreach (Enemy e in s1.Enemies)
+                        {
+                            if (e.EnemyGetShot(allBullets[k]))
+                            {
+                                p1.AddOnScore();
+                            }
+                        }
+                        /*for (int i = 0; i < enemySwarm.GetLength(0); i++)//Double boucle pour tous les ennemis
                         {
                             for (int j = 0; j < enemySwarm.GetLength(1); j++)//Double boucle pour tous les ennemis
                             {
@@ -137,7 +147,7 @@ namespace Spicy_Nvader
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
                     if (allBullets[k].Direction == -1)//bullet qui descendent
                     {
