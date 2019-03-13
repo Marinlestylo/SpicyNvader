@@ -47,7 +47,7 @@ namespace Spicy_Nvader
                 
                 tics++;//InCrémente les tics
                 int ts = (int)s.ElapsedMilliseconds;//"Stabiliser" la vitesse, indépendemment des ordis
-                Thread.Sleep(10);
+                Thread.Sleep(5);
             }
             p1.ShowScore();
             Console.Read();
@@ -63,6 +63,10 @@ namespace Spicy_Nvader
 
         public static void FromArrayToString()
         {
+            if (Convert.ToInt32(allChars[0][WIDTH_OF_WIDOWS - 8].ToString()) < 4)
+            {
+                Console.ForegroundColor = (ConsoleColor)rnd.Next(9, 16);
+            }
             Console.SetCursorPosition(0, 0);
             Console.Write(everyPixel);
             Console.SetCursorPosition(0, 0);
@@ -114,30 +118,32 @@ namespace Spicy_Nvader
 
         public static void Collision(Player p1)
         {
-            for(int k = 0; k < allBullets.Length; k++)
+            for(int k = 0; k < allBullets.Length; k++)//On regarde d'abord toutes les bullets
             {
-                if (allBullets[k] != null)
+                if (allBullets[k] != null)//Si elles existent (ne sont pas null)
                 {
-                    allBullets[k].UpdateBullet();
+                    allBullets[k].UpdateBullet();//On les update
                     if (allBullets[k].Direction == 1)//bullet qui montent
                     {
-                        for (int i = 0; i < enemySwarm.GetLength(0); i++)
+                        for (int i = 0; i < enemySwarm.GetLength(0); i++)//Double boucle pour tous les ennemis
                         {
-                            for (int j = 0; j < enemySwarm.GetLength(1); j++)
+                            for (int j = 0; j < enemySwarm.GetLength(1); j++)//Double boucle pour tous les ennemis
                             {
-                                if (enemySwarm[i, j] != null)
+                                if (enemySwarm[i, j] != null)//Si l'ennemi existe, (pas null)
                                 {
-                                    enemySwarm[i, j].EnemyGetShot(allBullets[k]);
-                                    p1.PlayerScore++;
+                                    if(enemySwarm[i, j].EnemyGetShot(allBullets[k]))//On applique la méthode pour voir si l'ennemi est touché
+                                    {
+                                        p1.AddOnScore();
+                                    }
                                 }
                             }
                         }
                     }
                     if (allBullets[k].Direction == -1)//bullet qui descendent
                     {
-                        p1.GetShot(allBullets[k]);
+                        p1.GetShot(allBullets[k]);//On regarde si une bullet touche le joueur
                     }
-                    if (allBullets[k].GonnaDelete)
+                    if (allBullets[k].GonnaDelete)//On regarde si la bullet doit être supprimée (propriété Gonnadelete vaut true)
                     {
                         allBullets[k] = null;
                     }

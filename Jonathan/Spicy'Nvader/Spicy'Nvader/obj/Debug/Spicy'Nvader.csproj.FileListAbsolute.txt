@@ -35,7 +35,6 @@ F:\ETML\226-Prog-ImplementerOO\SpicyNvader-master\Jonathan\Spicy'Nvader\Spicy'Nv
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe.config
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.pdb
-F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojResolveAssemblyReference.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb

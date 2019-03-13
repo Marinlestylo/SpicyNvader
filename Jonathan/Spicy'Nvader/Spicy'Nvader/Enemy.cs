@@ -87,13 +87,15 @@ namespace Spicy_Nvader
             Program.allChars[MaxY][MaxX] = '╝';
         }
 
-        public void EnemyGetShot(Bullet bull)
+        public bool EnemyGetShot(Bullet bull)
         {
             if (bull.PosX >= MinX && bull.PosX <= MaxX && bull.PosY >= _currentTopPos && bull.PosY <= MaxY)
             {
                 GonnaDelete = true;
                 bull.GonnaDelete = true;
+                return true;
             }
+            return false;
         }
 
         public void EnemyShoots()

@@ -54,7 +54,7 @@ namespace Spicy_Nvader
 
         private int _playerPosition;//Nouvelle position du joueur
         private int _playerLives;//Le nombe de vie du joueur
-        public int PlayerScore { get; set; }//Valeur du score du joueur
+        public int _playerScore { get; set; }//Valeur du score du joueur
 
         /// <summary>
         /// Constructeur de Player. Crée un joueur avec une position, un nombre de vie et une liste de points qui peuvent être touché par les ennemis.
@@ -63,7 +63,7 @@ namespace Spicy_Nvader
         {
             _playerPosition = Program.WIDTH_OF_WIDOWS / 2;
             _playerLives = 9;
-            PlayerScore = 0;
+            _playerScore = 0;
             GetHitBox();
         }
 
@@ -103,6 +103,11 @@ namespace Spicy_Nvader
             {
                 Program.allBullets[Program.allBullets.Length - 1] = new Bullet(_playerPosition, topPosition - 2, 1, 1);
             }
+        }
+
+        public void AddOnScore()
+        {
+            _playerScore+=25;
         }
 
         public void ShowLives()
@@ -145,7 +150,7 @@ namespace Spicy_Nvader
         {
             Console.Clear();
             Console.WriteLine("Vous avez perdu ! Quel dommage . . . ");
-            Console.WriteLine("Voici votre score : " + PlayerScore);
+            Console.WriteLine("Voici votre score : " + _playerScore);
         }
 
         public void GetHitBox()
