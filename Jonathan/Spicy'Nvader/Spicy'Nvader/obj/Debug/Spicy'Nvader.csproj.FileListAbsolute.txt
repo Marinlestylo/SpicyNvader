@@ -38,4 +38,12 @@ F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bi
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb
-F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojResolveAssemblyReference.cache
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe.config
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.pdb
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojAssemblyReference.cache
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Darude - Sandstorm.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Darude - Sandstorm.wav

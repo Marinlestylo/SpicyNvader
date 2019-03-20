@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Media;
 using System.Threading;
 
 namespace Spicy_Nvader
@@ -15,6 +16,8 @@ namespace Spicy_Nvader
         private static string everyPixel;//String qui va tout afficher
         public static int tics = 0;
         public static Bullet[] allBullets;
+        public static SoundPlayer sound = new SoundPlayer("Darude - Sandstorm.wav");
+        public static bool isSoundPlaying = false;
         //public static Enemy[,] enemySwarm;
         public static Random rnd = new Random();
         static void Main (string[] args)
@@ -44,13 +47,14 @@ namespace Spicy_Nvader
 
                 GameUpdate(p1, s1);//Update TOUT !
 
-                FromArrayToString();//Crée et écrit le string qui contient tout
+                FromArrayToString(p1);//Crée et écrit le string qui contient tout
 
                 
                 tics++;//InCrémente les tics
                 int ts = (int)s.ElapsedMilliseconds;//"Stabiliser" la vitesse, indépendemment des ordis
                 Thread.Sleep(5);
             }
+            sound.Stop();
             p1.ShowScore();
             Console.Read();
         }
@@ -63,11 +67,21 @@ namespace Spicy_Nvader
             }
         }
 
-        public static void FromArrayToString()
+        public static void PlayMusic()
         {
-            if (Convert.ToInt32(allChars[0][WIDTH_OF_WIDOWS - 8].ToString()) < 4)
+            if (!isSoundPlaying)
+            {
+                sound.PlayLooping();
+                isSoundPlaying = true;
+            }
+        }
+
+        public static void FromArrayToString(Player p1)
+        {
+            if (p1.Music)
             {
                 Console.ForegroundColor = (ConsoleColor)rnd.Next(9, 16);
+                PlayMusic();
             }
             Console.SetCursorPosition(0, 0);
             Console.Write(everyPixel);
@@ -80,41 +94,10 @@ namespace Spicy_Nvader
             Console.Write(everyPixel);
         }
 
-        /*public static void CreateEnemySwarm(int width, int height)
-        {
-            enemySwarm = new Enemy[height, width];
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    enemySwarm[i, j] = new Enemy( 2 + i * 8, 5 + j * 12);
-                }
-            }
-        }*/
-
-        /*public static void UpdateEnnemy()
-        {
-            for (int i = 0; i < enemySwarm.GetLength(0); i++)
-            {
-                for (int j = 0; j < enemySwarm.GetLength(1); j++)
-                {
-                    if (enemySwarm[i, j] != null && enemySwarm[i, j].GonnaDelete)
-                    {
-                        enemySwarm[i, j] = null;
-                    }
-                    else if (enemySwarm[i, j] != null)
-                    {
-                        enemySwarm[i, j].EnemyUpdate();
-                    }
-
-                }
-            }
-        }*/
 
         public static void GameUpdate(Player p1, Swarm s1)
         {
             Collision(p1, s1);
-            //UpdateEnnemy();
             s1.UpdateSwarm();
             p1.PlayerUpdate();
         }
@@ -135,19 +118,6 @@ namespace Spicy_Nvader
                                 p1.AddOnScore();
                             }
                         }
-                        /*for (int i = 0; i < enemySwarm.GetLength(0); i++)//Double boucle pour tous les ennemis
-                        {
-                            for (int j = 0; j < enemySwarm.GetLength(1); j++)//Double boucle pour tous les ennemis
-                            {
-                                if (enemySwarm[i, j] != null)//Si l'ennemi existe, (pas null)
-                                {
-                                    if(enemySwarm[i, j].EnemyGetShot(allBullets[k]))//On applique la méthode pour voir si l'ennemi est touché
-                                    {
-                                        p1.AddOnScore();
-                                    }
-                                }
-                            }
-                        }*/
                     }
                     if (allBullets[k].Direction == -1)//bullet qui descendent
                     {

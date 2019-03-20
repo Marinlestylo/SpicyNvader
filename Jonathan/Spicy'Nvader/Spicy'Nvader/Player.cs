@@ -10,7 +10,8 @@ namespace Spicy_Nvader
     {
         private List<Point> touched = new List<Point>();
         private ConsoleColor color = ConsoleColor.Yellow;
-        private int invincible = 0;
+        private int invincible;
+        public bool Music { get; private set; }
         private static readonly string[] PLAYER = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
         /*{
             "     ▄     ",
@@ -64,6 +65,8 @@ namespace Spicy_Nvader
             _playerPosition = Program.WIDTH_OF_WIDOWS / 2;
             _playerLives = 9;
             _playerScore = 0;
+            invincible = 0;
+            Music = false;
             GetHitBox();
         }
 
@@ -127,7 +130,7 @@ namespace Spicy_Nvader
             {
                 foreach (Point p in touched)
                 {
-                    if (bull.PosX == p.X && bull.PosY == p.Y && Console.ForegroundColor != color)
+                    if (bull.PosX == p.X && bull.PosY == p.Y && Program.tics >= invincible)
                     {
                         bull.GonnaDelete = true;
                         //Perdre une vie
@@ -149,8 +152,17 @@ namespace Spicy_Nvader
         public void ShowScore()
         {
             Console.Clear();
+            Console.ResetColor();
             Console.WriteLine("Vous avez perdu ! Quel dommage . . . ");
             Console.WriteLine("Voici votre score : " + _playerScore);
+        }
+
+        public void EpilepsicMode()
+        {
+            if (_playerLives < 4)
+            {
+                Music = true;
+            }
         }
 
         public void GetHitBox()
@@ -216,6 +228,7 @@ namespace Spicy_Nvader
                 Console.ResetColor();
             }
             ShowLives();
+            EpilepsicMode();
         }
     }
 }

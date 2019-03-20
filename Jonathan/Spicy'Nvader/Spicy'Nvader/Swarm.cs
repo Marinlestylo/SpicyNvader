@@ -21,6 +21,8 @@ namespace Spicy_Nvader
 
         public void Create(int row, int col)
         {
+            _direction = 1;
+            _lastDirection = 1;
             if(row < 8 && col < 8)//Obligation d'avoir moins de 8 row et col
             {
                 for (int i = 0; i < col; i++)
