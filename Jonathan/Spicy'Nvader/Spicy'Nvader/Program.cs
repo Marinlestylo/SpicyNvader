@@ -16,7 +16,9 @@ namespace Spicy_Nvader
         private static string everyPixel;//String qui va tout afficher
         public static int tics = 0;
         public static Bullet[] allBullets;
-        public static SoundPlayer sound = new SoundPlayer("Darude - Sandstorm.wav");
+        public static SoundPlayer sound = new SoundPlayer("Sounds\\Darude - Sandstorm.wav");
+        public static SoundPlayer keyboard = new SoundPlayer("Sounds\\KeyTouchNoise.Wav");
+
         public static bool isSoundPlaying = false;
         //public static Enemy[,] enemySwarm;
         public static Random rnd = new Random();
@@ -55,7 +57,7 @@ namespace Spicy_Nvader
                 Thread.Sleep(5);
             }
             sound.Stop();
-            p1.ShowScore();
+            ShowScore(p1);
             Console.Read();
         }
 
@@ -65,6 +67,21 @@ namespace Spicy_Nvader
             {
                 allChars[i] = "".PadLeft(WIDTH_OF_WIDOWS - 1).ToCharArray();//La ligne entière du tableau sera rempli d'espace. On met le -1 car le 80eme char est à la pos 79
             }
+        }
+
+        public static void ShowScore(Player p1)
+        {
+            Console.Clear();
+            Console.ResetColor();
+            string message = "Les aliens ont envahis la terre car TU ES NUL ! ! ! Retourne jouer à Minecraft NABOT ! \nVotre score est de : ";
+            keyboard.PlayLooping();
+            for (int i = 0; i < message.Length; i++)
+            {
+                Console.Write(message[i]);
+                System.Threading.Thread.Sleep(50);
+            }
+            Console.WriteLine(p1.PlayerScore);
+            keyboard.Stop();
         }
 
         public static void PlayMusic()

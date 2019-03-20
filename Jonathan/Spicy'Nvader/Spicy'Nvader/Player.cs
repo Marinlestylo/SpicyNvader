@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,12 @@ namespace Spicy_Nvader
     public class Player
     {
         private List<Point> touched = new List<Point>();
-        private ConsoleColor color = ConsoleColor.Yellow;
         private int invincible;
         public bool Music { get; private set; }
-        private static readonly string[] PLAYER = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
+        private int _timingBlink;
+        private SoundPlayer _bulletSound = new SoundPlayer("Sounds\\Bullet.wav");
+        private SoundPlayer _hurtSound = new SoundPlayer("Sounds\\Hurt.wav");
+        private static readonly string[] PLAYER1 = new string[10]//Le tableau contient les string de la fusée du joueur chaque string représente une ligne
         /*{
             "     ▄     ",
             "    / \    ",
@@ -37,6 +40,8 @@ namespace Spicy_Nvader
             "| / |@| \\ |",
             "|/  |@|  \\|"
         };
+        private string[] PLAYER = new string[10];
+        private static readonly string[] PLAYER2 = new string[10]
         /*{
             "     ▄    ",
             "   ▄███▄   ",
@@ -49,13 +54,25 @@ namespace Spicy_Nvader
             "█   █ █   █",
             " ▀██   ██▀ "
         };*/
+        {
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        };
         private const int VALUE_OF_MOVEMENT = 1;//Nombre de case que parcourt le joueur à chaque fois
-        private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)
+        private readonly int topPosition = Program.HEIGHT_OF_WINDOWS - PLAYER1.Length - 1;//Position top en fonction de la hauteur de la console - la taille du joueur - 1 sinon c'est trop bas et ça crash(on ne peut pas écrire sur la dernière ligne)
         //Hauteur : 69
-
-        private int _playerPosition;//Nouvelle position du joueur
+        private int _playerPosition;//position du joueur
         private int _playerLives;//Le nombe de vie du joueur
-        public int _playerScore { get; set; }//Valeur du score du joueur
+        public int PlayerScore { get; private set; }//Valeur du score du joueur
+        private bool isFlash = false;
 
         /// <summary>
         /// Constructeur de Player. Crée un joueur avec une position, un nombre de vie et une liste de points qui peuvent être touché par les ennemis.
@@ -64,10 +81,11 @@ namespace Spicy_Nvader
         {
             _playerPosition = Program.WIDTH_OF_WIDOWS / 2;
             _playerLives = 9;
-            _playerScore = 0;
+            PlayerScore = 0;
             invincible = 0;
             Music = false;
             GetHitBox();
+            PLAYER = PLAYER1;
         }
 
         /// <summary>
@@ -80,6 +98,22 @@ namespace Spicy_Nvader
                 for (int j = 0; j < PLAYER[i].Length; j++)//Boucle pour chaque char
                 {
                     Program.allChars[topPosition + i][_playerPosition - PLAYER[i].Length / 2 + j] = PLAYER[i][j];
+                }
+            }
+        }
+
+        public void Flash()
+        {
+            if (isFlash)
+            {
+                _timingBlink++;
+                if (_timingBlink % 20 == 0)
+                {
+                    PLAYER = PLAYER1;
+                }
+                else if(_timingBlink % 10 == 0)
+                {
+                    PLAYER = PLAYER2;
                 }
             }
         }
@@ -105,12 +139,16 @@ namespace Spicy_Nvader
             if (Program.allBullets[Program.allBullets.Length - 1] == null)//Si il n'y a pas d'autre bullet, on peut tirer sinon non
             {
                 Program.allBullets[Program.allBullets.Length - 1] = new Bullet(_playerPosition, topPosition - 2, 1, 1);
+                if (_playerLives > 3)
+                {
+                    _bulletSound.Play();
+                }
             }
         }
 
         public void AddOnScore()
         {
-            _playerScore+=25;
+            PlayerScore+=25;
         }
 
         public void ShowLives()
@@ -133,12 +171,18 @@ namespace Spicy_Nvader
                     if (bull.PosX == p.X && bull.PosY == p.Y && Program.tics >= invincible)
                     {
                         bull.GonnaDelete = true;
+                        if (_playerLives > 3)
+                        {
+                            _hurtSound.Play();
+                        }
                         //Perdre une vie
                         if (_playerLives > 1)
                         {
                             _playerLives--;
-                            Console.ForegroundColor = color;
-                            invincible = Program.tics + 100;
+                            EpilepsicMode();
+                            isFlash = true;
+                            _timingBlink = 9;
+                            invincible = Program.tics + 200;
                         }
                         else
                         {
@@ -147,14 +191,6 @@ namespace Spicy_Nvader
                     }
                 }
             }
-        }
-
-        public void ShowScore()
-        {
-            Console.Clear();
-            Console.ResetColor();
-            Console.WriteLine("Vous avez perdu ! Quel dommage . . . ");
-            Console.WriteLine("Voici votre score : " + _playerScore);
         }
 
         public void EpilepsicMode()
@@ -223,12 +259,14 @@ namespace Spicy_Nvader
                 }
             }
             DrawPlayer();
-            if (Program.tics == invincible && Console.ForegroundColor == color)//invicibilité du joueurs
+            if (Program.tics == invincible)//invicibilité du joueurs
             {
-                Console.ResetColor();
+                isFlash = false;
+                PLAYER = PLAYER1;
             }
             ShowLives();
-            EpilepsicMode();
+            Flash();
+            System.Diagnostics.Debug.WriteLine(_timingBlink);
         }
     }
 }

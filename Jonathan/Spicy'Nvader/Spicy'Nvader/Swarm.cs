@@ -50,6 +50,7 @@ namespace Spicy_Nvader
                 move(DirectionChange());
             }
             DeleteEnemy();
+            Invasion();
         }
 
         public void DeleteEnemy()
@@ -78,6 +79,17 @@ namespace Spicy_Nvader
                 e.MoveEnemy(_direction);
             }
             _lastDirection = _direction;
+        }
+
+        public void Invasion()
+        {
+            foreach (Enemy e in Enemies)
+            {
+                if (e.MaxY >= Program.HEIGHT_OF_WINDOWS - (e.MaxY - e.CurrentTopPos))
+                {
+                    Program.game = false;
+                }
+            }
         }
 
         /// <summary>
