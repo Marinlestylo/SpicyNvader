@@ -11,6 +11,8 @@ namespace Spicy_Nvader
     {
         private List<Point> touched = new List<Point>();
         private int invincible;
+        private const string SCORE = "Score : ";
+        private const string LIVES = "Vies restantes : ";
         public bool Music { get; private set; }
         private int _timingBlink;
         private SoundPlayer _bulletSound = new SoundPlayer("Sounds\\Bullet.wav");
@@ -149,12 +151,29 @@ namespace Spicy_Nvader
         public void AddOnScore()
         {
             PlayerScore+=25;
+            PlayerScore+=25;
         }
 
         public void ShowLives()
         {
+            for (int i = 0; i < LIVES.Length; i++)
+            {
+                Program.allChars[0][Program.WIDTH_OF_WIDOWS - LIVES.Length - 8 + i] = LIVES[i];
+            }
             Program.allChars[0][Program.WIDTH_OF_WIDOWS - 8] = Convert.ToChar(_playerLives.ToString());
             Program.allChars[0][Program.WIDTH_OF_WIDOWS - 7] = '♥';
+        }
+
+        public void ShowScore()
+        {
+            for (int i = 0; i < SCORE.Length; i++)
+            {
+                Program.allChars[1][Program.WIDTH_OF_WIDOWS - SCORE.Length - 8 + i] = SCORE[i];
+            }
+            for (int i = 0; i < PlayerScore.ToString().Length; i++)
+            {
+                Program.allChars[1][Program.WIDTH_OF_WIDOWS - 8 + i] = PlayerScore.ToString()[i];
+            }
         }
 
 
@@ -265,8 +284,8 @@ namespace Spicy_Nvader
                 PLAYER = PLAYER1;
             }
             ShowLives();
+            ShowScore();
             Flash();
-            System.Diagnostics.Debug.WriteLine(_timingBlink);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Spicy_Nvader
         {
             Console.Clear();
             Console.ResetColor();
-            string message = "Les aliens ont envahis la terre car TU ES NUL ! ! ! Retourne jouer à Minecraft NABOT ! \nVotre score est de : ";
+            string message = "Le tigre ne perd pas ! Retourne jouer à Minecraft NABOT ! \n\nVotre score est de : ";
             keyboard.PlayLooping();
             for (int i = 0; i < message.Length; i++)
             {
