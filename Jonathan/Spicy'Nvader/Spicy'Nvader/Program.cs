@@ -73,7 +73,7 @@ namespace Spicy_Nvader
         {
             Console.Clear();
             Console.ResetColor();
-            string message = "Le tigre ne perd pas ! Retourne jouer à Minecraft NABOT ! \n\nVotre score est de : ";
+            string message = "Le tigre ne perd pas ! Retourne jouer à Minecraft NABOT ! \n\nTon score est de : ";
             keyboard.PlayLooping();
             for (int i = 0; i < message.Length; i++)
             {
@@ -101,7 +101,7 @@ namespace Spicy_Nvader
                 PlayMusic();
             }
             Console.SetCursorPosition(0, 0);
-            Console.Write(everyPixel);
+            Console.Write(everyPixel);//tableau vide
             Console.SetCursorPosition(0, 0);
             everyPixel = "";
             for (int i = 0; i < allChars.Length; i++)

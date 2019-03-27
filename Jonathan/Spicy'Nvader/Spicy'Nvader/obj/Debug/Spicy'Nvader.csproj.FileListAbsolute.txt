@@ -45,7 +45,6 @@ D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\ob
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb
-F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojResolveAssemblyReference.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Darude - Sandstorm.wav
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\KeyTouchNoise.wav
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Bullet.wav
@@ -54,3 +53,4 @@ D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bi
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Darude - Sandstorm.wav
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Hurt.wav
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\KeyTouchNoise.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojAssemblyReference.cache

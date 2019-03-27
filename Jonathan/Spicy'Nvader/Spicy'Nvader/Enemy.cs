@@ -35,7 +35,8 @@ namespace Spicy_Nvader
             "███████████",
             "█ ███████ █",
             "█ █     █ █",
-            "██ ██" }; //Design du monstre
+            "██ ██"
+            }; //Design du monstre
 
         public Enemy(int topPos, int leftPos)
         {
