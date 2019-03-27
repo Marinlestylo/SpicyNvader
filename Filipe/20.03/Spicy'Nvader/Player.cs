@@ -199,10 +199,6 @@ namespace Spicy_Nvader
             {
                 Move(_playerDirection);
             }
-            else if (_playerPosition < PLAYER[4].Length / 2 + Program.MARGIN && _playerPosition > (Program.WIDTH_OF_WIDOWS - 1) - (PLAYER[4].Length / 2) - Program.MARGIN)
-            {
-                Move(_playerDirection);
-            }
             if (Console.KeyAvailable)
             {
                 switch (Console.ReadKey(true).Key)//Lis la touche du clavier sur laquelle on appuie
