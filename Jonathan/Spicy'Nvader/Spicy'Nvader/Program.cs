@@ -54,7 +54,9 @@ namespace Spicy_Nvader
                 
                 tics++;//InCrémente les tics
                 int ts = (int)s.ElapsedMilliseconds;//"Stabiliser" la vitesse, indépendemment des ordis
-                Thread.Sleep(5);
+                if (ts > 10) ts = 10;
+                Debug.WriteLine(ts);
+                Thread.Sleep(10 - ts);
             }
             sound.Stop();
             ShowScore(p1);
@@ -100,8 +102,8 @@ namespace Spicy_Nvader
                 Console.ForegroundColor = (ConsoleColor)rnd.Next(9, 16);
                 PlayMusic();
             }
-            Console.SetCursorPosition(0, 0);
-            Console.Write(everyPixel);//tableau vide
+            /*Console.SetCursorPosition(0, 0);
+            Console.Write(everyPixel);//tableau vide*/
             Console.SetCursorPosition(0, 0);
             everyPixel = "";
             for (int i = 0; i < allChars.Length; i++)

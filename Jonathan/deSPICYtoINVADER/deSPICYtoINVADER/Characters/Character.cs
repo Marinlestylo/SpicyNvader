@@ -15,6 +15,7 @@ namespace deSPICYtoINVADER
 
         /* Attributs */
         protected Point _position;//Coord X et Coord Y du character
+        protected int _direction;//Sens dans lequel le character va
         protected string[] _design;//Tableau de string pour le design du character
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace deSPICYtoINVADER
         /// <summary>
         /// Dessine le character, peut importe le design
         /// </summary>
-        private void Draw()
+        protected void Draw()
         {
             for (int i = 0; i < _design.Length; i++)
             {
@@ -61,6 +62,6 @@ namespace deSPICYtoINVADER
         }
 
         public abstract void Update();
-        public abstract void Move(int direction);
+        protected abstract void Move(int direction);
     }
 }

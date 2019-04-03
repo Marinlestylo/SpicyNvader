@@ -11,12 +11,8 @@ namespace deSPICYtoINVADER
     {
         static void Main(string[] args)
         {
-            Player bullet = new Player();
             Game game = new Game();
-            bullet.Update();
-            bullet.Move(1);
-            game.FromArrayToString();
-
+            game.GameLoop();
             Console.ReadLine();
         }
     }

@@ -25,7 +25,8 @@ namespace deSPICYtoINVADER.Characters
 
         public override void Update()
         {
-            BaseUpdate();
+            Draw();
+            Input();
             Debug.WriteLine("Player : Update()");
         }
 
@@ -33,7 +34,7 @@ namespace deSPICYtoINVADER.Characters
         /// Permet de bouger la position du joueur (que latéralement)
         /// </summary>
         /// <param name="direction">1 ou -1 en fonction de si on va à gauche ou a droite</param>
-        public override void Move(int direction)
+        protected override void Move(int direction)
         {
             _position.X += direction;
             //Actualise la hitbox
@@ -41,6 +42,30 @@ namespace deSPICYtoINVADER.Characters
             {
                 p.X += direction;
             }
+        }
+
+        private void Input()
+        {
+            if (Console.KeyAvailable)
+            {
+                switch (Console.ReadKey(true).Key)//Lis la touche du clavier sur laquelle on appuie
+                {
+                    case ConsoleKey.RightArrow://Flèche de droite
+                        Move(1);
+                        break;
+                    case ConsoleKey.LeftArrow://Flèche de gauche
+                        Move(-1);
+                        break;
+                    case ConsoleKey.Spacebar://set le tir sur la touche espace
+
+                        break;
+                }
+            }
+        }
+
+        private void AutoInput()
+        {
+
         }
 
         private void GetHitBox()
