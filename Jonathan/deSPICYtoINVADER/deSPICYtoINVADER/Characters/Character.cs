@@ -7,7 +7,7 @@ namespace deSPICYtoINVADER
         /// <summary>
         /// Propriétés pour avoir le nombre de vie
         /// </summary>
-        public int Lives { get; }
+        protected int Lives { get; set; }
         /// <summary>
         /// Propriétés pour savoir si on doit supprimer le character
         /// </summary>

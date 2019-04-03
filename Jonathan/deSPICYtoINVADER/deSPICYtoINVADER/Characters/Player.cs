@@ -15,19 +15,23 @@ namespace deSPICYtoINVADER.Characters
 
         /* Attributs */
         private List<Point> _touched;
+        private bool _autoMove;
 
-        public Player() : base(3, new Point(44, 55))
+        /// <summary>
+        /// Constructeur de la classe, il reprend le constructeur de "Character"
+        /// </summary>
+        public Player() : base(9, new Point(Game.WIDTH_OF_WIDOWS / 2, Game.HEIGHT_OF_WINDOWS - Sprites.Player.Length - 1 ))
         {
             _design = Sprites.Player;
             Score = 0;
             _touched = new List<Point>();
+            _autoMove = false;
         }
 
         public override void Update()
         {
             Draw();
             Input();
-            Debug.WriteLine("Player : Update()");
         }
 
         /// <summary>
@@ -51,23 +55,78 @@ namespace deSPICYtoINVADER.Characters
                 switch (Console.ReadKey(true).Key)//Lis la touche du clavier sur laquelle on appuie
                 {
                     case ConsoleKey.RightArrow://Flèche de droite
-                        Move(1);
+                        _direction = 1;
+                        if (!_autoMove && CanIMove())
+                        {
+                           Move(_direction); 
+                        }
                         break;
                     case ConsoleKey.LeftArrow://Flèche de gauche
-                        Move(-1);
+                        _direction = -1;
+                        if (!_autoMove && CanIMove())
+                        {
+                            Move(_direction);
+                        }
+                        break;
+                    case ConsoleKey.DownArrow://Stoper le vaisseau
+                        _direction = 0;
                         break;
                     case ConsoleKey.Spacebar://set le tir sur la touche espace
-
+                        Shoot();
+                        break;
+                    case ConsoleKey.M://Active ou désactive le mode auto
+                        if (_autoMove)
+                        {
+                            _autoMove = false;
+                        }
+                        else
+                        {
+                            _autoMove = true;
+                            _direction = 0;
+                        }
                         break;
                 }
             }
+            AutoMove();//Si le mode auto est on
+            CanIMove();//Vérifie si on peut bouger
         }
 
-        private void AutoInput()
+        public void Shoot()
         {
-
+            Game.allBullets.Add(new Bullet(new Point(_position.X, _position.Y), -1));
         }
 
+        /// <summary>
+        /// Si le joueur arrive dans la marge, il ne peut plus avancer
+        /// </summary>
+        /// <returns>return true si le joueur peut encore avancer, false sinon</returns>
+        private bool CanIMove()
+        {
+            if (_direction == 1 && _position.X == Game.WIDTH_OF_WIDOWS - 1 - Game.MARGIN - (Sprites.Player[9].Length / 2))
+            {
+                return false;
+            }
+            else if (_direction == -1 && _position.X == Game.MARGIN + (Sprites.Player[9].Length / 2))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Si le mode autoMove est a true, le vaisseau bouge tout seul tous les 5 tics (Dans la direction définie)
+        /// </summary>
+        private void AutoMove()
+        {
+            if (_autoMove && Game.tics % 2 == 0 && CanIMove())
+            {
+                Move(_direction);
+            }
+        }
+
+        /// <summary>
+        /// Probablement la pire méthode du monde mais on a rien trouvé de mieux pour faire une hitbox précise
+        /// </summary>
         private void GetHitBox()
         {
             //De gauche à droite

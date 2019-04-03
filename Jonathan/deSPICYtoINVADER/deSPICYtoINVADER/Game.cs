@@ -20,8 +20,10 @@ namespace deSPICYtoINVADER
         public static int tics = 0;
         private static string everyPixel;//String qui va tout afficher
         public static char[][] allChars = new char[HEIGHT_OF_WINDOWS - 1][];
+        public static List<Bullet> allBullets = new List<Bullet>();
 
         /* Attributs */
+        private Enemy _enemy = new Enemy(new Point(15, 15));
         private Player _user = new Player();
         private Stopwatch _stopTime = new Stopwatch();
 
@@ -64,6 +66,16 @@ namespace deSPICYtoINVADER
         private void GameUpdate()
         {
             _user.Update();
+            _enemy.Update();
+            BulletUpdate();
+        }
+
+        public void BulletUpdate()
+        {
+            foreach (Bullet bull in allBullets)
+            {
+                bull.Update();
+            }
         }
 
         /// <summary>

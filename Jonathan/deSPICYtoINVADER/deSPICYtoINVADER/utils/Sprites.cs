@@ -21,8 +21,19 @@ namespace deSPICYtoINVADER.utils
             "| / |@| \\ |",
             "|/  |@|  \\|"
         };
+        /*{
+            "     ▄     ",
+            "    / \    ",
+            "   | o |   ",
+            "   |   |   ",
+            "   | o |   ",
+            "   |   |   ",
+            "  /| o |\   ",
+            " / |___| \  ",
+            "| / |@| \ |",
+            "|/  |@|  \|"*/
 
-        public static readonly string[] Ennemy = new string[]
+        public static readonly string[] Enemy = new string[]
         {
             "▄     ▄",
             "█   █",
@@ -33,6 +44,15 @@ namespace deSPICYtoINVADER.utils
             "█ █     █ █",
             "██ ██"
         }; //Design du monstre
+        /*{
+            "  ▄     ▄  ",
+            "   █   █   ",
+            "  ███████  ",
+            " ██ ███ ██ ",
+            "███████████",
+            "█ ███████ █",
+            "█ █     █ █",
+            "   ██ ██   " }; //Design du monstre*/
 
         public static readonly string[] Bullet = new string[]
         {
