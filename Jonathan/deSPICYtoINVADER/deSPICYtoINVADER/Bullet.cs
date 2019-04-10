@@ -50,7 +50,7 @@ namespace deSPICYtoINVADER.Characters
         /// </summary>
         public void Move()
         {
-            if ((Direction == -1 && Position.Y > 1) || (Direction == 1 && Position.Y < Game.HEIGHT_OF_WINDOWS - 3))//Condition pour voir que la bullet ne va pas trop loin
+            if ((Direction == -1 && Position.Y > 1) || (Direction == 1 && Position.Y < Game.HEIGHT_OF_WINDOWS - 2))//Condition pour voir que la bullet ne va pas trop loin
             {
                 Position.Y += Direction;//Monte ou descend
             }
@@ -68,7 +68,7 @@ namespace deSPICYtoINVADER.Characters
         public void Update()
         {
             Draw();
-            if (Game.tics % 7 == 0)
+            if (Game.tics % 4 == 0)
                 Move();
         }
     }

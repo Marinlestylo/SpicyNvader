@@ -49,8 +49,9 @@ namespace deSPICYtoINVADER
 
                 FromArrayToString();
 
-                
 
+                if (_enemy.GonnaDelete)
+                    Debug.WriteLine("Mort");
 
 
                 /* Fin de boucle */
@@ -70,11 +71,25 @@ namespace deSPICYtoINVADER
             BulletUpdate();
         }
 
-        public void BulletUpdate()
+        private void BulletUpdate()
         {
+            RemoveBullet();//On remove les bullets avant de les update pour pas update des bullets "mortes"
             foreach (Bullet bull in allBullets)
             {
+                _enemy.GetShot(bull);
                 bull.Update();
+            }
+        }
+
+        private void RemoveBullet()
+        {
+            for (int i = 0; i < allBullets.Count; i++)
+            {
+                if (allBullets[i].GonnaDelete)
+                {
+                    allBullets.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
@@ -93,7 +108,7 @@ namespace deSPICYtoINVADER
         /// <summary>
         /// Met tous les chars du tableau allChars en "espace"
         /// </summary>
-        public void ResetArray()
+        private void ResetArray()
         {
             for (int i = 0; i < allChars.Length; i++)//Boucle pour reset le tableau de char
             {
@@ -106,10 +121,8 @@ namespace deSPICYtoINVADER
         /// Transforme le tableau en une seule string
         /// Ecris la string
         /// </summary>
-        public void FromArrayToString()
+        private void FromArrayToString()
         {
-            /*Console.SetCursorPosition(0, 0);
-            Console.Write(everyPixel);//tableau vide*/
             Console.SetCursorPosition(0, 0);
             everyPixel = "";
             for (int i = 0; i < allChars.Length; i++)

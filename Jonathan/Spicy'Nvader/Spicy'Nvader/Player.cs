@@ -151,7 +151,7 @@ namespace Spicy_Nvader
         public void AddOnScore()
         {
             PlayerScore+=25;
-            PlayerScore+=25;
+            //PlayerScore+=25;
         }
 
         public void ShowLives()

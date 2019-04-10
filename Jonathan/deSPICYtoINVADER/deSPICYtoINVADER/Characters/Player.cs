@@ -16,6 +16,10 @@ namespace deSPICYtoINVADER.Characters
         /* Attributs */
         private List<Point> _touched;
         private bool _autoMove;
+        private int _timeBeforeNextShoot;
+        private int _invincible;
+        private const string SCORE = "Score : ";
+        private const string LIVES = "Vies restantes : ";
 
         /// <summary>
         /// Constructeur de la classe, il reprend le constructeur de "Character"
@@ -26,14 +30,47 @@ namespace deSPICYtoINVADER.Characters
             Score = 0;
             _touched = new List<Point>();
             _autoMove = false;
+            _timeBeforeNextShoot = 0;
+            _invincible = 0;
+            GetHitBox();
         }
 
         public override void Update()
         {
+            ShowInformations();
             Draw();
             Input();
         }
 
+        #region Informations
+        //affiche la vie et le score
+        private void ShowInformations()
+        {
+            //Vies
+            for (int i = 0; i < LIVES.Length; i++)//affiche "Vies restantes :"
+            {
+                Game.allChars[0][Game.WIDTH_OF_WIDOWS - LIVES.Length - 8 + i] = LIVES[i];
+            }
+            Game.allChars[0][Game.WIDTH_OF_WIDOWS - 8] = Convert.ToChar(Life.ToString());
+            Game.allChars[0][Game.WIDTH_OF_WIDOWS - 7] = '♥';
+            //Score
+            for (int i = 0; i < SCORE.Length; i++)//affiche "Score :"
+            {
+                Game.allChars[1][Game.WIDTH_OF_WIDOWS - SCORE.Length - 8 + i] = SCORE[i];
+            }
+            for (int i = 0; i < Score.ToString().Length; i++)//affiche le score char par char
+            {
+                Game.allChars[1][Game.WIDTH_OF_WIDOWS - 8 + i] = Score.ToString()[i];
+            }
+        }
+
+        public void AddOnScore()
+        {
+            Score += 37;
+        }
+        #endregion
+
+        #region Move
         /// <summary>
         /// Permet de bouger la position du joueur (que latéralement)
         /// </summary>
@@ -45,6 +82,34 @@ namespace deSPICYtoINVADER.Characters
             foreach (Point p in _touched)
             {
                 p.X += direction;
+            }
+        }
+
+        /// <summary>
+        /// Si le joueur arrive dans la marge, il ne peut plus avancer
+        /// </summary>
+        /// <returns>return true si le joueur peut encore avancer, false sinon</returns>
+        private bool CanIMove()
+        {
+            if (_direction == 1 && _position.X == Game.WIDTH_OF_WIDOWS - 1 - Game.MARGIN - (Sprites.Player[9].Length / 2))
+            {
+                return false;
+            }
+            else if (_direction == -1 && _position.X == Game.MARGIN + (Sprites.Player[9].Length / 2))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Si le mode autoMove est a true, le vaisseau bouge tout seul tous les 5 tics (Dans la direction définie)
+        /// </summary>
+        private void AutoMove()
+        {
+            if (_autoMove && Game.tics % 2 == 0 && CanIMove())
+            {
+                Move(_direction);
             }
         }
 
@@ -90,64 +155,51 @@ namespace deSPICYtoINVADER.Characters
             AutoMove();//Si le mode auto est on
             CanIMove();//Vérifie si on peut bouger
         }
+        #endregion
 
-        public void Shoot()
+        #region Shoot/GetShot
+        protected override void Shoot()
         {
-            Game.allBullets.Add(new Bullet(new Point(_position.X, _position.Y), -1));
-        }
-
-        /// <summary>
-        /// Si le joueur arrive dans la marge, il ne peut plus avancer
-        /// </summary>
-        /// <returns>return true si le joueur peut encore avancer, false sinon</returns>
-        private bool CanIMove()
-        {
-            if (_direction == 1 && _position.X == Game.WIDTH_OF_WIDOWS - 1 - Game.MARGIN - (Sprites.Player[9].Length / 2))
+            if (_timeBeforeNextShoot <= Game.tics)
             {
-                return false;
-            }
-            else if (_direction == -1 && _position.X == Game.MARGIN + (Sprites.Player[9].Length / 2))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Si le mode autoMove est a true, le vaisseau bouge tout seul tous les 5 tics (Dans la direction définie)
-        /// </summary>
-        private void AutoMove()
-        {
-            if (_autoMove && Game.tics % 2 == 0 && CanIMove())
-            {
-                Move(_direction);
+                Game.allBullets.Add(new Bullet(new Point(_position.X, _position.Y), -1));
+                _timeBeforeNextShoot = Game.tics + 99;
             }
         }
 
+        public override void GetShot(Bullet bull)
+        {
+            if (bull.Position.Y > _position.Y && bull.Direction == 1)//Si la bullet est à la hauteur du joueur ou moins, et si elle va vers le bas
+            {
+                foreach (Point p in _touched)
+                {
+                    if (bull.Position.X == _position.X && bull.Position.Y == _position.Y && Game.tics > _invincible)
+                    {
+                        Life--;
+                        _invincible = Game.tics + 200;
+                        if (Life == 0)
+                        {
+                            GonnaDelete = true;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
         /// <summary>
-        /// Probablement la pire méthode du monde mais on a rien trouvé de mieux pour faire une hitbox précise
+        /// Méthode qui crée tous les points auquel on peut se faire toucher (Le premier et le dernier char de chaque ligne).
+        /// A noter que le point au centre tout en haut y est 2 fois.
         /// </summary>
         private void GetHitBox()
         {
-            //De gauche à droite
-            _touched.Add(new Point(_position.X - 5, _position.Y + 8));
-            _touched.Add(new Point(_position.X - 4, _position.Y + 7));
-            _touched.Add(new Point(_position.X - 3, _position.Y + 6));
-            _touched.Add(new Point(_position.X - 2, _position.Y + 2));
-            _touched.Add(new Point(_position.X - 2, _position.Y + 3));
-            _touched.Add(new Point(_position.X - 2, _position.Y + 4));
-            _touched.Add(new Point(_position.X - 2, _position.Y + 5));
-            _touched.Add(new Point(_position.X - 1, _position.Y + 1));
-            _touched.Add(new Point(_position.X, _position.Y));
-            _touched.Add(new Point(_position.X + 1, _position.Y + 1));
-            _touched.Add(new Point(_position.X + 2, _position.Y + 2));
-            _touched.Add(new Point(_position.X + 2, _position.Y + 3));
-            _touched.Add(new Point(_position.X + 2, _position.Y + 4));
-            _touched.Add(new Point(_position.X + 2, _position.Y + 5));
-            _touched.Add(new Point(_position.X + 3, _position.Y + 6));
-            _touched.Add(new Point(_position.X + 4, _position.Y + 7));
-            _touched.Add(new Point(_position.X + 5, _position.Y + 8));
+            for (int i = 0; i < Sprites.Player.Length; i++)
+            {
+                _touched.Add(new Point(_position.X - Sprites.Player[i].Length / 2, _position.Y + i));//premier point de la ligne
+                _touched.Add(new Point(_position.X + Sprites.Player[i].Length / 2, _position.Y + i));//dernier point de la ligne
+            }
         }
-
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using deSPICYtoINVADER.Characters;
+using System.Diagnostics;
 
 namespace deSPICYtoINVADER
 {
@@ -7,11 +8,11 @@ namespace deSPICYtoINVADER
         /// <summary>
         /// Propriétés pour avoir le nombre de vie
         /// </summary>
-        protected int Lives { get; set; }
+        protected int Life { get; set; }
         /// <summary>
         /// Propriétés pour savoir si on doit supprimer le character
         /// </summary>
-        public bool GonnaDelete { get; private set; }
+        public bool GonnaDelete { get; protected set; }
 
         /* Attributs */
         protected Point _position;//Coord X et Coord Y du character
@@ -25,7 +26,7 @@ namespace deSPICYtoINVADER
         /// <param name="position">La position (toujours tout en haut du character et centré en largeur)</param>
         public Character(int lives, Point position)
         {
-            Lives = lives;
+            Life = lives;
             _position = position;
             GonnaDelete = false;
         }
@@ -62,6 +63,8 @@ namespace deSPICYtoINVADER
         }
 
         public abstract void Update();
+        public abstract void GetShot(Bullet bull);
         protected abstract void Move(int direction);
+        protected abstract void Shoot();
     }
 }
