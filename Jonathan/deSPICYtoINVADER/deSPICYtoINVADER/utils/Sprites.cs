@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace deSPICYtoINVADER.utils
+﻿namespace deSPICYtoINVADER.utils
 {
     public static class Sprites
     {
@@ -44,15 +38,15 @@ namespace deSPICYtoINVADER.utils
             "█ █     █ █",
             "██ ██"
         }; //Design du monstre
-        /*{
-            "  ▄     ▄  ",
-            "   █   █   ",
-            "  ███████  ",
-            " ██ ███ ██ ",
-            "███████████",
-            "█ ███████ █",
-            "█ █     █ █",
-            "   ██ ██   " }; //Design du monstre*/
+           /*{
+               "  ▄     ▄  ",
+               "   █   █   ",
+               "  ███████  ",
+               " ██ ███ ██ ",
+               "███████████",
+               "█ ███████ █",
+               "█ █     █ █",
+               "   ██ ██   " }; //Design du monstre*/
 
         public static readonly string[] Bullet = new string[]
         {

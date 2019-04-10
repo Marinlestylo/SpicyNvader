@@ -1,6 +1,8 @@
 ﻿using deSPICYtoINVADER.Characters;
+using deSPICYtoINVADER.utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +25,12 @@ namespace deSPICYtoINVADER
         /// <summary>
         /// Constructeur de la classe Swarm
         /// </summary>
-        public Swarm()
+        public Swarm(int row, int col)
         {
             Enemies = new List<Enemy>();
             _direction = 1;
             _lastDirection = _direction;
+            Create(row, col);
         }
 
         /// <summary>
@@ -35,14 +38,18 @@ namespace deSPICYtoINVADER
         /// </summary>
         public void Update()
         {
-            foreach (Enemy e in Enemies)
+            if (Enemies.Count == 0)
             {
-                e.Update();
+                Player.AddOnScore(217);
+                Create(5, 5);
             }
             if (Game.tics % 7 == 0)
             {
-                //move
+                Move(ChangeDirection());
             }
+            EnemyUpdate();
+            DeleteEnemy();
+            Invasion();
         }
 
         /// <summary>
@@ -54,18 +61,60 @@ namespace deSPICYtoINVADER
         {
             _direction = 1;//Set la direction à 1 (vers la droite)
             _lastDirection = _direction;
-            if (row < 9 && col < 9)//obligation d'avoir maximum 8 Enemy par ligne et 8 par colonne
+            if (row < 7 && col < 10)//obligation d'avoir maximum 9 Enemy par ligne et 6 par colonne
             {
-                for (int i = 0; i < col; i++)
+                for (int i = 0; i < row; i++)
                 {
-                    for (int j = 0; j < row; j++)
+                    for (int j = 0; j < col; j++)
                     {
-                        Enemies.Add(new Enemy(new Point(2 + i * 9, 8 + j * 13)));
+                        Enemies.Add(new Enemy(new Point(9 + j * 13, 2 + i * 9), Sprites.Enemy));
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// 
+        /// _direction va se faire attribuer la valeur passée en paramètre.
+        /// Déplace tous les Enemy de l'essaim, si les Enemis changent de direction (direction et _lastdirection sont pas pareil), ils descendent de 5.
+        /// _lastdirection prend la valeur de _direction.
+        /// 
+        /// </summary>
+        /// <param name="dir">Direction dans laquelle vont les Enemis</param>
+        private void Move(int dir)
+        {
+            _direction = dir;
+            if (_lastDirection != _direction)
+            {
+                GoDown();
+            }
+            foreach (Enemy e in Enemies)
+            {
+                e.MoveInSwarm(_direction);
+            }
+            _lastDirection = _direction;
+        }
+
+        private void EnemyUpdate()
+        {
+            foreach (Enemy e in Enemies)
+            {
+                e.Update();
+            }
+        }
+
+        private void GoDown()
+        {
+            foreach (Enemy en in Enemies)
+            {
+                en.GoDown();
+            }
+        }
+
+        /// <summary>
+        /// Check tous les Enemis de la liste, si un des Enemy est tout à droite ou tout à gauche, l'essaim change de direction
+        /// </summary>
+        /// <returns>La direction de l'essaim</returns>
         private int ChangeDirection()
         {
             if (_direction == 1)
@@ -89,6 +138,37 @@ namespace deSPICYtoINVADER
                     }
                 }
                 return _direction = -1;
+            }
+        }
+
+        /// <summary>
+        /// Supprime tous les Enemis qui ont la valeur GonnaDelete à true
+        /// </summary>
+        private void DeleteEnemy()
+        {
+            for (int i = 0; i < Enemies.Count; i++)
+            {
+                if (Enemies[i].GonnaDelete)
+                {
+                    Enemies.Remove(Enemies[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Si un des ennemis arrive à la hauteur du joueur, c'est la fin du jeu. Ils ont envahi la terre :'(.
+        /// Set gameRunning à false et stop la boucle du jeu
+        /// </summary>
+        public void Invasion()
+        {
+            foreach (Enemy e in Enemies)
+            {
+                if (e.BottomRightCorner.Y >= Game.HEIGHT_OF_WINDOWS - Sprites.Player.Length - 1)
+                {
+                    GoDown();
+                    Game.gameRunning = false;
+                    return;
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ namespace deSPICYtoINVADER.Characters
         /// <summary>
         /// Pour savoir si on doit supprimer la bullet ou pas
         /// </summary>
-        public bool GonnaDelete { get; private set; }
+        public bool GonnaDelete { get; set; }
 
         /// <summary>
         /// Constructeurs de Bullet
