@@ -109,6 +109,7 @@ namespace Spicy_Nvader
             p1.PlayerUpdate();
         }
 
+
         public static void Collision()
         {
             for(int k = 0; k < allBullets.Length; k++)
