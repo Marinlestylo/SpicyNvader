@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 F:\FIN1\PROJETS\032-P_Dev\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe.config
 F:\FIN1\PROJETS\032-P_Dev\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe
 F:\FIN1\PROJETS\032-P_Dev\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.pdb
@@ -36,6 +39,7 @@ F:\ETML\226-Prog-ImplementerOO\SpicyNvader-master\Jonathan\Spicy'Nvader\Spicy'Nv
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe.config
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.pdb
+<<<<<<< Updated upstream
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojResolveAssemblyReference.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
@@ -105,3 +109,24 @@ D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bi
 D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\KeyTouchNoise.wav
 F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojAssemblyReference.cache
 >>>>>>> master
+=======
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe.config
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.exe
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Spicy'Nvader.pdb
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojAssemblyReference.cache
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csproj.CoreCompileInputs.cache
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.exe
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.pdb
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Darude - Sandstorm.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\KeyTouchNoise.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Bullet.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Hurt.wav
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Bullet.wav
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Darude - Sandstorm.wav
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\Hurt.wav
+D:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\bin\Debug\Sounds\KeyTouchNoise.wav
+F:\ETML\226-Prog-ImplementerOO\SpicyNvader\Jonathan\Spicy'Nvader\Spicy'Nvader\obj\Debug\Spicy'Nvader.csprojAssemblyReference.cache
+>>>>>>> Stashed changes
