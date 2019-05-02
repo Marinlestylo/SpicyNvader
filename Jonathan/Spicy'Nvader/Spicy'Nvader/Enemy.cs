@@ -13,12 +13,12 @@ namespace Spicy_Nvader
         public int MinX { get; private set; }//tout à gauche
         public int MaxX { get; private set; }//tout à droite
         public int MaxY { get; private set; }//tout en bas
-        private int _currentTopPos;//Tout en haut de l'ennemi
+        public int CurrentTopPos { get; private set; }//Tout en haut de l'ennemi (MinY)
         private int _currentLeftPos;
-        private int _direction;
+        //private int _direction;
 
         private static readonly string[] ENEMY = new string[8]
-        {
+        /*{
             "  ▄     ▄  ",
             "   █   █   ",
             "  ███████  ",
@@ -26,13 +26,22 @@ namespace Spicy_Nvader
             "███████████",
             "█ ███████ █",
             "█ █     █ █",
-            "   ██ ██   " }; //Design du monstre
+            "   ██ ██   " }; //Design du monstre*/
+            {
+            "▄     ▄",
+            "█   █",
+            "███████",
+            "██ ███ ██",
+            "███████████",
+            "█ ███████ █",
+            "█ █     █ █",
+            "██ ██"
+            }; //Design du monstre
 
         public Enemy(int topPos, int leftPos)
         {
-            _currentTopPos = topPos;
+            CurrentTopPos = topPos;
             _currentLeftPos = leftPos;
-            _direction = 1;
             GonnaDelete = false;
         }
 
@@ -42,29 +51,22 @@ namespace Spicy_Nvader
             {
                 for (int j = 0; j < ENEMY[i].Length; j++)
                 {
-                    Program.allChars[_currentTopPos + i][_currentLeftPos - ENEMY[0].Length / 2 + j] = ENEMY[i][j];
+                    Program.allChars[CurrentTopPos + i][_currentLeftPos - ENEMY[i].Length / 2 + j] = ENEMY[i][j];
                 }
             }
         }
 
-        public void MoveEnemy()
+        public void MoveEnemy(int direction)
         {
-            if (_currentLeftPos == (Program.WIDTH_OF_WIDOWS - 1) - (ENEMY[0].Length / 2) - Program.MARGIN && _direction == 1)//Aller à droite
-            {
-                _currentTopPos += 5;
-                _direction *= -1;
-            }
-            else if(_currentLeftPos == ENEMY[0].Length / 2 + Program.MARGIN && _direction == -1)//Gauche
-            {
-                _currentTopPos += 5;
-                _direction *= -1;
-            }
+            _currentLeftPos += direction;
+            MinX = _currentLeftPos - ENEMY[4].Length / 2;
+            MaxX = _currentLeftPos + ENEMY[4].Length / 2;
+            MaxY = CurrentTopPos + ENEMY.Length - 1;//Sinon c'est trop bas
+        }
 
-            _currentLeftPos += _direction;
-
-            MinX = _currentLeftPos - ENEMY[0].Length / 2;
-            MaxX = _currentLeftPos + ENEMY[0].Length / 2;
-            MaxY = _currentTopPos + ENEMY.Length - 1;//Sinon c'est trop bas
+        public void GoDown(int val)
+        {
+            CurrentTopPos += val;
         }
 
         /// <summary>
@@ -72,19 +74,22 @@ namespace Spicy_Nvader
         /// </summary>
         public void GetHitBox()
         {
-            Program.allChars[_currentTopPos][MinX] = '╔';
-            Program.allChars[_currentTopPos][MaxX] = '╗';
+            Program.allChars[CurrentTopPos][MinX] = '╔';
+            Program.allChars[CurrentTopPos][MaxX] = '╗';
             Program.allChars[MaxY][MinX] = '╚';
             Program.allChars[MaxY][MaxX] = '╝';
         }
 
-        public void EnemyGetShot(Bullet bull)
+        public bool EnemyGetShot(Bullet bull)
         {
-            if (bull.PosX > MinX && bull.PosX < MaxX && bull.PosY > _currentTopPos && bull.PosY < MaxY)
+            if (bull.PosX >= MinX && bull.PosX <= MaxX && bull.PosY >= CurrentTopPos && bull.PosY <= MaxY)
             {
+
                 GonnaDelete = true;
                 bull.GonnaDelete = true;
+                return true;
             }
+            return false;
         }
 
         public void EnemyShoots()
@@ -93,7 +98,7 @@ namespace Spicy_Nvader
             {
                 if (Program.allBullets[i] == null)//Si le tableau a une place vide on crée la bullet dans cette case sinon on ne crée pas de bullet
                 {
-                    Program.allBullets[i] = new Bullet(_currentLeftPos, _currentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 3, -1);
+                    Program.allBullets[i] = new Bullet(_currentLeftPos, CurrentTopPos + ENEMY.Length + 1, Program.HEIGHT_OF_WINDOWS - 3, -1);
                     return;
                 }
             }
@@ -101,13 +106,9 @@ namespace Spicy_Nvader
 
         public void EnemyUpdate()
         {
-            if (Program.rnd.Next(1, 100) > 90)
+            if (Program.rnd.Next(1, 1000) > 990 && Program.tics % 5 == 0)
             {
                 EnemyShoots();
-            }
-            if (Program.tics % 10 == 0)//pour bouger pas trop vite on bouge une fois tous les 10000 tics
-            {
-                MoveEnemy();
             }
             DrawEnemy();
             //GetHitBox();//DEBUG
