@@ -1,4 +1,5 @@
 ﻿using deSPICYtoINVADER.Characters;
+using deSPICYtoINVADER.utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,40 +19,56 @@ namespace deSPICYtoINVADER
 
         /* Static */
         public static int tics = 0;
+        public static bool gameRunning;
         private static string everyPixel;//String qui va tout afficher
         public static char[][] allChars = new char[HEIGHT_OF_WINDOWS - 1][];
         public static List<Bullet> allBullets = new List<Bullet>();
 
         /* Attributs */
-        private Enemy _enemy = new Enemy(new Point(15, 15));
+        //private Enemy _enemy = new Enemy(new Point(15, 15), Sprites.SmallEnemy);
+        private Swarm _swarm = new Swarm(5, 7);
         private Player _user = new Player();
         private Stopwatch _stopTime = new Stopwatch();
 
+        /// <summary>
+        /// Constructeur de la classe Game
+        /// Set les propriétés de la fenêtre (taille, largeur, curseur invi)
+        /// set gameRunning a true(pour que la boucle de la game tourne)
+        /// </summary>
         public Game()
         {
             SetWindow();
-            ResetArray();
-            FromArrayToString();
+            gameRunning = true;
+        }
+
+        /// <summary>
+        /// Fais les réglages pour la taille de la fenêtre ainsi que pour le curseur
+        /// </summary>
+        private void SetWindow()
+        {
+            Console.WindowHeight = HEIGHT_OF_WINDOWS;
+            Console.WindowWidth = WIDTH_OF_WIDOWS;
+            Console.BufferHeight = HEIGHT_OF_WINDOWS;
+            Console.BufferWidth = WIDTH_OF_WIDOWS;
+            Console.CursorVisible = false;
         }
 
         public void GameLoop()
         {
-            while (!_user.GonnaDelete)
+            while (!_user.GonnaDelete && gameRunning)
             {
                 /* Début de boucle */
                 _stopTime.Restart();
                 if (tics == int.MaxValue)//tics (si les tics sont au max, on les remets à 0)
                     tics = 0;
                 /* Début de boucle */
-                ResetArray();
 
-                GameUpdate();
+                ResetArray();//Reset le tableau de char, le remet vide
 
-                FromArrayToString();
+                GameUpdate();//Update tout (Bullet, Enemy, le swarm et player). Durant l'update, plein de chose vont se noter dans le tableau allChars
 
+                FromArrayToString();//Transforme le tableau en un string, va en 0,0  et l'écrit.
 
-                if (_enemy.GonnaDelete)
-                    Debug.WriteLine("Mort");
 
 
                 /* Fin de boucle */
@@ -62,21 +79,45 @@ namespace deSPICYtoINVADER
                 Thread.Sleep(10 - ts);
                 /* Fin de boucle */
             }
+            Thread.Sleep(3000);
+            Console.Clear();
         }
 
+        /// <summary>
+        /// Update les Enemis, les Bullets, le player, le swarm
+        /// </summary>
         private void GameUpdate()
         {
             _user.Update();
-            _enemy.Update();
+            _swarm.Update();
+            Collision();
             BulletUpdate();
         }
 
+        private void Collision()
+        {
+            foreach (Bullet b in allBullets)
+            {
+                if (b.Direction == 1 )//Bullet qui descendent (collision avec le player)
+                {
+                    _user.GetShot(b);
+                }
+                else//Bullet qui montent
+                {
+                    foreach (Enemy e in _swarm.Enemies)
+                    {
+                        e.GetShot(b);
+                    }
+                }
+            }
+        }
+
+        #region BulletUpdate
         private void BulletUpdate()
         {
             RemoveBullet();//On remove les bullets avant de les update pour pas update des bullets "mortes"
             foreach (Bullet bull in allBullets)
             {
-                _enemy.GetShot(bull);
                 bull.Update();
             }
         }
@@ -92,19 +133,9 @@ namespace deSPICYtoINVADER
                 }
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Fais les réglages pour la taille de la fenêtre ainsi que pour le curseur
-        /// </summary>
-        private void SetWindow()
-        {
-            Console.WindowHeight = HEIGHT_OF_WINDOWS;
-            Console.WindowWidth = WIDTH_OF_WIDOWS;
-            Console.BufferHeight = HEIGHT_OF_WINDOWS;
-            Console.BufferWidth = WIDTH_OF_WIDOWS;
-            Console.CursorVisible = false;
-        }
-
+        #region Array
         /// <summary>
         /// Met tous les chars du tableau allChars en "espace"
         /// </summary>
@@ -131,5 +162,6 @@ namespace deSPICYtoINVADER
             }
             Console.Write(everyPixel);
         }
+        #endregion
     }
 }

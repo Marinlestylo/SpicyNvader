@@ -11,7 +11,7 @@ namespace deSPICYtoINVADER.Characters
     public class Player : Character
     {
         /* Propriétés */
-        public int Score;
+        public static int Score;
 
         /* Attributs */
         private List<Point> _touched;
@@ -52,7 +52,8 @@ namespace deSPICYtoINVADER.Characters
                 Game.allChars[0][Game.WIDTH_OF_WIDOWS - LIVES.Length - 8 + i] = LIVES[i];
             }
             Game.allChars[0][Game.WIDTH_OF_WIDOWS - 8] = Convert.ToChar(Life.ToString());
-            Game.allChars[0][Game.WIDTH_OF_WIDOWS - 7] = '♥';
+            Game.allChars[0][Game.WIDTH_OF_WIDOWS - 7] = ' ';
+            Game.allChars[0][Game.WIDTH_OF_WIDOWS - 6] = '♥';
             //Score
             for (int i = 0; i < SCORE.Length; i++)//affiche "Score :"
             {
@@ -64,9 +65,9 @@ namespace deSPICYtoINVADER.Characters
             }
         }
 
-        public void AddOnScore()
+        public static void AddOnScore(int points)
         {
-            Score += 37;
+            Score += points;
         }
         #endregion
 
@@ -163,20 +164,21 @@ namespace deSPICYtoINVADER.Characters
             if (_timeBeforeNextShoot <= Game.tics)
             {
                 Game.allBullets.Add(new Bullet(new Point(_position.X, _position.Y), -1));
-                _timeBeforeNextShoot = Game.tics + 99;
+                _timeBeforeNextShoot = Game.tics + 0;
             }
         }
 
         public override void GetShot(Bullet bull)
         {
-            if (bull.Position.Y > _position.Y && bull.Direction == 1)//Si la bullet est à la hauteur du joueur ou moins, et si elle va vers le bas
+            if (bull.Position.Y >= _position.Y && bull.Direction == 1)//Si la bullet est à la hauteur du joueur ou moins, et si elle va vers le bas
             {
                 foreach (Point p in _touched)
                 {
-                    if (bull.Position.X == _position.X && bull.Position.Y == _position.Y && Game.tics > _invincible)
+                    if (bull.Position.X == p.X && bull.Position.Y == p.Y && Game.tics > _invincible)
                     {
                         Life--;
                         _invincible = Game.tics + 200;
+                        bull.GonnaDelete = true;//Supprimer la bullet qui nous a blessé
                         if (Life == 0)
                         {
                             GonnaDelete = true;
